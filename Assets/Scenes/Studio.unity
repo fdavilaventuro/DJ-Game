@@ -743,6 +743,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DJController
       objectReference: {fileID: 0}
+    - target: {fileID: 6829234883749150207, guid: 05fbd416ac33640489e20c8b19cc3789, type: 3}
+      propertyPath: m_Name
+      value: LeftFader
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -752,27 +756,19 @@ PrefabInstance:
       addedObject: {fileID: 1340575167}
     - targetCorrespondingSourceObject: {fileID: 6829234883749150207, guid: 05fbd416ac33640489e20c8b19cc3789, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1340575166}
+      addedObject: {fileID: 1340575169}
+    - targetCorrespondingSourceObject: {fileID: 6829234883749150207, guid: 05fbd416ac33640489e20c8b19cc3789, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1340575168}
+    - targetCorrespondingSourceObject: {fileID: 6829234883749150207, guid: 05fbd416ac33640489e20c8b19cc3789, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1340575170}
   m_SourcePrefab: {fileID: 100100000, guid: 05fbd416ac33640489e20c8b19cc3789, type: 3}
 --- !u!1 &1340575165 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6829234883749150207, guid: 05fbd416ac33640489e20c8b19cc3789, type: 3}
   m_PrefabInstance: {fileID: 1340575164}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1340575166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1340575165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96383ca6e8ac8e64384eb37c7dc13d4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minPosition: {x: 0.02858078, y: -0.05, z: 0.0327}
-  maxPosition: {x: 0.02858078, y: -0.0025, z: 0.0327}
 --- !u!54 &1340575167
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -800,6 +796,67 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
+--- !u!114 &1340575168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1340575165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1bc992571301d4a9602ac95ef4c71a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactorFilters: []
+  _maxInteractors: -1
+  _maxSelectingInteractors: -1
+  _data: {fileID: 0}
+  _pointableElement: {fileID: 1340575169}
+  _rigidbody: {fileID: 1340575167}
+  _grabSource: {fileID: 0}
+  _useClosestPointAsGrabSource: 0
+  _releaseDistance: 0
+  _resetGrabOnGrabsUpdated: 1
+  _physicsGrabbable: {fileID: 0}
+--- !u!114 &1340575169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1340575165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43f86b14a27b52f4f9298c33015b5c26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transferOnSecondSelection: 0
+  _addNewPointsToFront: 0
+  _forwardElement: {fileID: 0}
+  _oneGrabTransformer: {fileID: 0}
+  _twoGrabTransformer: {fileID: 0}
+  _targetTransform: {fileID: 0}
+  _maxGrabPoints: -1
+  _rigidbody: {fileID: 1340575167}
+  _kinematicWhileSelected: 1
+  _throwWhenUnselected: 1
+--- !u!114 &1340575170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1340575165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96383ca6e8ac8e64384eb37c7dc13d4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minPosition: {x: 0.02858078, y: -0.05, z: 0.0327}
+  maxPosition: {x: 0.02858078, y: -0.0025, z: 0.0327}
+  grabbable: {fileID: 0}
+  rb: {fileID: 0}
 --- !u!1 &1370562716
 GameObject:
   m_ObjectHideFlags: 0
