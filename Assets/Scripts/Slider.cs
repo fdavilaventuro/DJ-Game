@@ -37,7 +37,7 @@ public class Slider : MonoBehaviour
         float zDistance = Vector3.Distance(zeroPoint.position, onePoint.position);
         var constraints = new OneGrabTranslateTransformer.OneGrabTranslateConstraints()
         {
-            ConstraintsAreRelative = true,
+            ConstraintsAreRelative = false,
             MinX = new FloatConstraint() { Constrain = true, Value = 0f },
             MaxX = new FloatConstraint() { Constrain = true, Value = 0f },
             MinY = new FloatConstraint() { Constrain = true, Value = 0f },
@@ -57,7 +57,7 @@ public class Slider : MonoBehaviour
         float norm = transform.localPosition.z;
         float delta = Mathf.Clamp((norm - minZ) / (maxZ - minZ), 0.0f, 1.0f);
         value = Mathf.Lerp(min, max, delta);
-        Debug.Log(name + " delta: " + delta.ToString("F2") + " value: " + value.ToString("F2"));
+        //Debug.Log(name + " delta: " + delta.ToString("F2") + " value: " + value.ToString("F2"));
 
         if (value != lastValue)
         {

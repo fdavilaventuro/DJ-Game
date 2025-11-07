@@ -4,6 +4,10 @@ public class DJTable : MonoBehaviour
 {
     AudioSource audioSource;
 
+    // ±6% range for tempo
+    private const float MinPitch = 0.94f; // -6%
+    private const float MaxPitch = 1.06f; // +6%
+
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -16,6 +20,7 @@ public class DJTable : MonoBehaviour
 
     public void SetPitch(float pitch)
     {
+        pitch = Mathf.Clamp(pitch, MinPitch, MaxPitch);
         audioSource.pitch = pitch;
     }
 
