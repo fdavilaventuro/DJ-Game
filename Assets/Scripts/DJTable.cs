@@ -33,4 +33,16 @@ public class DJTable : MonoBehaviour
     {
         audioSource.Pause();
     }
+
+    public void Toggle()
+    {
+        if (audioSource.isPlaying)
+        {
+            audioSource.Pause();
+        }
+        else
+        {
+            audioSource.Play();
+        }
+    }
 }
