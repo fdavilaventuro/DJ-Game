@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SkyboxGradient
-  m_Shader: {fileID: 4800000, guid: dbcb3d408f96ef44b9b65c474ba3e769, type: 3}
-  m_Parent: {fileID: 0}
+  m_Name: StencilClear
+  m_Shader: {fileID: 103, guid: 0000000000000000f000000000000000, type: 0}
+  m_Parent: {fileID: 2100000, guid: 9411b612816b1f046b30f2cd288c545c, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -22,16 +22,13 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats:
-    - _DitherStrength: 32
-    - _Exp: 0.98
-    m_Colors:
-    - _BottomColor: {r: 0.8085676, g: 0.7885814, b: 0.9339623, a: 1}
-    - _Direction: {r: 0.49, g: 0.42, b: 0.81, a: 1}
-    - _MiddleColor: {r: 0.80784315, g: 0.87540966, b: 0.9098039, a: 1}
-    - _TopColor: {r: 0.54901963, g: 0.787643, b: 0.8509804, a: 1}
-    - _Up: {r: 0, g: 1, b: 0, a: 1}
+    m_Floats: []
+    m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

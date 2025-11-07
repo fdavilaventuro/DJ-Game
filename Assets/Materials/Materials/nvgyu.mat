@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SkyboxGradient
-  m_Shader: {fileID: 4800000, guid: dbcb3d408f96ef44b9b65c474ba3e769, type: 3}
+  m_Name: nvgyu
+  m_Shader: {fileID: 4800000, guid: b7b5550bb0e8bdc41b8ac52a3e6c40ea, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -22,16 +22,16 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 3c0054e8f96e02442957cfa9490940f2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DitherStrength: 32
-    - _Exp: 0.98
-    m_Colors:
-    - _BottomColor: {r: 0.8085676, g: 0.7885814, b: 0.9339623, a: 1}
-    - _Direction: {r: 0.49, g: 0.42, b: 0.81, a: 1}
-    - _MiddleColor: {r: 0.80784315, g: 0.87540966, b: 0.9098039, a: 1}
-    - _TopColor: {r: 0.54901963, g: 0.787643, b: 0.8509804, a: 1}
-    - _Up: {r: 0, g: 1, b: 0, a: 1}
+    - _Brightness: 0.5
+    - _Contrast: 0.5
+    - _ZWrite: 0
+    m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
