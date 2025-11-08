@@ -5,9 +5,18 @@ public class Crossfader : MonoBehaviour
     [SerializeField] AudioSource leftSource;
     [SerializeField] AudioSource rightSource;
 
+    private float leftBaseVolume;
+    private float rightBaseVolume;
+
+    void Start()
+    {
+        leftBaseVolume = leftSource.volume;
+        rightBaseVolume = rightSource.volume;
+    }
+
     public void whenValueChanged(float v)
     {
-        leftSource.volume = Mathf.Clamp(leftSource.volume - v, 0, 1);
-        rightSource.volume = Mathf.Clamp(rightSource.volume + v, 0, 1);
+        leftSource.volume = leftBaseVolume * Mathf.Clamp01(1 - v);
+        rightSource.volume = rightBaseVolume * Mathf.Clamp01(1 + v);
     }
 }
