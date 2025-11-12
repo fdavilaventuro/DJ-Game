@@ -1,7 +1,6 @@
 using UnityEngine;
 using Oculus.Interaction;
 using UnityEngine.Events;
-using System;
 
 public class Slider : MonoBehaviour
 {
@@ -10,10 +9,16 @@ public class Slider : MonoBehaviour
     [SerializeField] float min = 0f;
     [SerializeField] float max = 1f;
     [SerializeField] float initialValue = 0.5f;
+
     OneGrabTranslateTransformer transformer;
     public UnityEvent<float> WhenValueChanged;
+
     float value;
     float lastValue;
+
+    [Header("Optional DJ Link")]
+    public DJTable djTable;
+    public bool isPitchSlider = false; // ✅ set in Inspector for pitch faders
 
     void Awake()
     {
@@ -22,12 +27,11 @@ public class Slider : MonoBehaviour
 
     void Start()
     {
-        // calculate vector from zero to one
-        // create parent object rotated based on zero to one vector, and set constraints to relative
-        // then we can just set min and max on z
+        // Calculate world-space direction between zero and one
         Vector3 zeroToOne = onePoint.position - zeroPoint.position;
         Quaternion rotation = Quaternion.LookRotation(zeroToOne.normalized, Vector3.up);
 
+        // Create a parent aligned with the slider's axis
         GameObject parent = new GameObject("Slider Parent");
         parent.transform.position = zeroPoint.position;
         parent.transform.rotation = rotation;
@@ -35,6 +39,8 @@ public class Slider : MonoBehaviour
         transform.SetParent(parent.transform, true);
 
         float zDistance = Vector3.Distance(zeroPoint.position, onePoint.position);
+
+        // ✅ Keep your original absolute constraints (DO NOT CHANGE)
         var constraints = new OneGrabTranslateTransformer.OneGrabTranslateConstraints()
         {
             ConstraintsAreRelative = false,
@@ -46,8 +52,15 @@ public class Slider : MonoBehaviour
             MaxZ = new FloatConstraint() { Constrain = true, Value = zDistance },
         };
         transformer.Constraints = constraints;
+
+        // ✅ Set initial position in world space
         float t = Mathf.InverseLerp(min, max, initialValue);
         transform.position = Vector3.Lerp(zeroPoint.position, onePoint.position, t);
+
+        // ✅ Convert to local space so Update() math works correctly
+        transform.localPosition = transform.parent.InverseTransformPoint(transform.position);
+
+        lastValue = -1f; // force first update
     }
 
     void Update()
@@ -55,13 +68,31 @@ public class Slider : MonoBehaviour
         float minZ = transformer.Constraints.MinZ.Value;
         float maxZ = transformer.Constraints.MaxZ.Value;
         float norm = transform.localPosition.z;
+
+        // normalized slider value (0–1)
         float delta = Mathf.Clamp((norm - minZ) / (maxZ - minZ), 0.0f, 1.0f);
         value = Mathf.Lerp(min, max, delta);
-        //Debug.Log(name + " delta: " + delta.ToString("F2") + " value: " + value.ToString("F2"));
 
-        if (value != lastValue)
+        if (Mathf.Abs(value - lastValue) > 0.0001f)
         {
+            // Trigger UnityEvent (optional)
             WhenValueChanged?.Invoke(value);
+
+            // Direct binding to DJTable (optional)
+            if (djTable != null)
+            {
+                if (isPitchSlider)
+                {
+                    // map to ±6%
+                    float mappedPitch = 1f + (value - 0.5f) * 0.12f;
+                    djTable.SetPitch(mappedPitch);
+                }
+                else
+                {
+                    djTable.SetVolume(value);
+                }
+            }
+
             lastValue = value;
         }
     }

@@ -3611,7 +3611,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &407910911
 MonoBehaviour:
@@ -9257,6 +9257,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8687425673012537121, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
   m_PrefabInstance: {fileID: 1016418273}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &965336904 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
+  m_PrefabInstance: {fileID: 1016418273}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ebcff9afa0571e43ac6a1dc1fdc30c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &965686409
 GameObject:
   m_ObjectHideFlags: 0
@@ -10080,6 +10091,10 @@ PrefabInstance:
       value: 118
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
+      propertyPath: djTable
+      value: 
+      objectReference: {fileID: 344596961}
+    - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: onePoint
       value: 
       objectReference: {fileID: 344596959}
@@ -10089,23 +10104,23 @@ PrefabInstance:
       objectReference: {fileID: 344596958}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 344596961}
+      objectReference: {fileID: 965336904}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetVolume
+      value: OnVolumeSliderChanged
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: DJTable, Assembly-CSharp
+      value: Slider, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -10358,9 +10373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4aa5ed03a012974a9634938d0417d65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 1897638619}
-  musicFolder: Assets/Audio
   songDropdown: {fileID: 1646331165}
+  djTable: {fileID: 1897638625}
 --- !u!4 &1042099887
 Transform:
   m_ObjectHideFlags: 0
@@ -10991,7 +11005,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1125753623
 MonoBehaviour:
@@ -11584,12 +11598,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: max
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: min
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
+      propertyPath: djTable
+      value: 
+      objectReference: {fileID: 1897638625}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: onePoint
       value: 
@@ -11600,11 +11618,15 @@ PrefabInstance:
       objectReference: {fileID: 1897638621}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: initialValue
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
+      propertyPath: isPitchSlider
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -12762,6 +12784,20 @@ Transform:
   - {fileID: 1469065339}
   m_Father: {fileID: 1133793021}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1280632540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410839015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &1286084793
 GameObject:
   m_ObjectHideFlags: 0
@@ -13203,7 +13239,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1897638625}
         m_TargetAssemblyTypeName: DJTable, Assembly-CSharp
-        m_MethodName: Toggle
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13932,6 +13968,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8687425673012537121, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
   m_PrefabInstance: {fileID: 2075073608}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1398315971 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
+  m_PrefabInstance: {fileID: 2075073608}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ebcff9afa0571e43ac6a1dc1fdc30c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1412766931
 GameObject:
   m_ObjectHideFlags: 0
@@ -14302,7 +14349,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -14344,7 +14391,12 @@ PrefabInstance:
       propertyPath: controllerDrivenHandPosesType
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 11400000, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
+      propertyPath: requestScenePermissionOnStartup
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8100000, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
@@ -14369,6 +14421,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100002, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 254740220}
+    - targetCorrespondingSourceObject: {fileID: 100002, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1280632540}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1445824577}
@@ -17005,6 +17060,10 @@ PrefabInstance:
       value: 118
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
+      propertyPath: djTable
+      value: 
+      objectReference: {fileID: 1897638625}
+    - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: onePoint
       value: 
       objectReference: {fileID: 1897638624}
@@ -17014,7 +17073,7 @@ PrefabInstance:
       objectReference: {fileID: 1897638623}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -19213,9 +19272,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4aa5ed03a012974a9634938d0417d65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 1356964556}
-  musicFolder: Assets/Audio
   songDropdown: {fileID: 1073912538}
+  djTable: {fileID: 344596961}
 --- !u!4 &1962337363
 Transform:
   m_ObjectHideFlags: 0
@@ -19606,12 +19664,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: max
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: min
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
+      propertyPath: djTable
+      value: 
+      objectReference: {fileID: 344596961}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: onePoint
       value: 
@@ -19622,27 +19684,35 @@ PrefabInstance:
       objectReference: {fileID: 344596960}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: initialValue
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
+      propertyPath: isPitchSlider
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
+      propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 344596961}
+      objectReference: {fileID: 1398315971}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetPitch
+      value: OnPitchValueChanged
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: DJTable, Assembly-CSharp
+      value: Slider, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -20552,6 +20622,10 @@ PrefabInstance:
       propertyPath: _playerOrigin
       value: 
       objectReference: {fileID: 1445824568}
+    - target: {fileID: 3162065387456349882, guid: 46fdef3df9a5a354caf7692f85e5eff2, type: 3}
+      propertyPath: _defaultHeight
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 5568758619435239312, guid: 46fdef3df9a5a354caf7692f85e5eff2, type: 3}
       propertyPath: _controller
       value: 
@@ -20615,6 +20689,10 @@ PrefabInstance:
     - target: {fileID: 5568758620505594000, guid: 46fdef3df9a5a354caf7692f85e5eff2, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568758620505594006, guid: 46fdef3df9a5a354caf7692f85e5eff2, type: 3}
+      propertyPath: m_Height
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 6561596850968630206, guid: 46fdef3df9a5a354caf7692f85e5eff2, type: 3}
       propertyPath: _leftEyeAnchor
@@ -23021,7 +23099,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 344596961}
         m_TargetAssemblyTypeName: DJTable, Assembly-CSharp
-        m_MethodName: Toggle
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
