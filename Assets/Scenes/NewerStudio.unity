@@ -13506,11 +13506,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1314740349}
   m_Mesh: {fileID: -6109348017574948787, guid: 479d627c07ecbfe49a4be981663e6aed, type: 3}
---- !u!82 &1356964556 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 5475455957580201920, guid: 896573e4c1f5df440a94e4346ecec163, type: 3}
-  m_PrefabInstance: {fileID: 344596956}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1358465618 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8506586420522287670, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
@@ -16400,8 +16395,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83bdc98e235415541a6f4b38c5ed853d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftSource: {fileID: 1356964556}
-  rightSource: {fileID: 1897638619}
+  leftTable: {fileID: 344596961}
+  rightTable: {fileID: 1897638625}
+  curvePower: 1
 --- !u!4 &1726799157
 Transform:
   m_ObjectHideFlags: 0
@@ -18931,11 +18927,6 @@ PrefabInstance:
       addedObject: {fileID: 734306522}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 896573e4c1f5df440a94e4346ecec163, type: 3}
---- !u!82 &1897638619 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 5475455957580201920, guid: 896573e4c1f5df440a94e4346ecec163, type: 3}
-  m_PrefabInstance: {fileID: 1897638618}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1897638620 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2750401382627025574, guid: 896573e4c1f5df440a94e4346ecec163, type: 3}

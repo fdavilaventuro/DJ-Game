@@ -89,7 +89,7 @@ public class Slider : MonoBehaviour
                 }
                 else
                 {
-                    djTable.SetVolume(value);
+                    djTable.SetBaseVolume(value); // ahora sólo ajusta el volumen propio del deck
                 }
             }
 

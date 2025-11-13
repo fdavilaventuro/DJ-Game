@@ -9,7 +9,9 @@ public class DJTable : MonoBehaviour
     private FMOD.Channel channel;
     private FMOD.DSP pitchShifterDSP;
 
-    private float volume = 1f;
+    private float volume = 1f;       // volumen final aplicado al canal
+    private float volumeBase = 1f;   // volumen propio del deck (antes del crossfader)
+    private float crossfadeFactor = 1f; // factor del crossfader (0..1)
     private float targetPitch = 1f;
     private float currentPitch = 1f;
     private float basePitch = 1f;
@@ -19,6 +21,8 @@ public class DJTable : MonoBehaviour
     private const float minPitch = 0.94f;
     private const float maxPitch = 1.06f;
     private const float pitchSmoothSpeed = 4f;
+
+    public float VolumeBase => volumeBase;
 
     void Awake()
     {
@@ -85,7 +89,10 @@ public class DJTable : MonoBehaviour
         // Start playback
         ChannelGroup group = default;
         system.playSound(sound, group, false, out channel);
-        channel.setVolume(volume);
+
+        // Reaplicar el volumen correcto combinando deck + crossfader
+        ApplyFinalVolume();
+
         channel.setPitch(1f);
         basePitch = 1f;
         targetPitch = 1f;
@@ -130,9 +137,32 @@ public class DJTable : MonoBehaviour
     }
 
 
+    // Volumen base del deck (controlado por el slider individual)
+    public void SetBaseVolume(float newVolume)
+    {
+        volumeBase = Mathf.Clamp01(newVolume);
+        ApplyFinalVolume();
+    }
+
+    // Factor aplicado por el crossfader (0..1)
+    public void SetCrossfadeFactor(float factor)
+    {
+        crossfadeFactor = Mathf.Clamp01(factor);
+        ApplyFinalVolume();
+    }
+
+    // Mantiene la compatibilidad con el código existente
     public void SetVolume(float newVolume)
     {
-        volume = Mathf.Clamp01(newVolume);
+        volumeBase = Mathf.Clamp01(newVolume);
+        crossfadeFactor = 1f; // si se usa SetVolume directo, asumimos crossfader abierto
+        ApplyFinalVolume();
+    }
+
+    private void ApplyFinalVolume()
+    {
+        volume = volumeBase * crossfadeFactor;
+
         if (channel.hasHandle())
             channel.setVolume(volume);
     }
