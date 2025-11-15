@@ -10698,7 +10698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: min
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: onePoint
@@ -10710,7 +10710,7 @@ PrefabInstance:
       objectReference: {fileID: 697760713}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: initialValue
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6919749112280897444, guid: ccbecc6b51cf6924a933043c92bf6607, type: 3}
       propertyPath: WhenValueChanged.m_PersistentCalls.m_Calls.Array.size
