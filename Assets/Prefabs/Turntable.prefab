@@ -355,6 +355,7 @@ GameObject:
   - component: {fileID: 859240200206321271}
   - component: {fileID: 8441268941564964235}
   - component: {fileID: 366319277331216538}
+  - component: {fileID: 3766091852413200341}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -588,6 +589,28 @@ MonoBehaviour:
   _colorProperties: []
   _floatProperties: []
   _updateEveryFrame: 1
+--- !u!64 &3766091852413200341
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3202103246953908909}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1773401746103208251, guid: 908646ac30762bd4294135ae21865693, type: 3}
 --- !u!1 &6392006143771738692
 GameObject:
   m_ObjectHideFlags: 0
