@@ -157,8 +157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3266c3d920715b84089935c4ab019210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableView: {fileID: 0}
-  _editor: {fileID: 0}
+  _interactableView: {fileID: 4330798733219466560}
+  _editor: {fileID: 2487559816174468833}
   _colorShaderPropertyName: _Color
   _normalColorState:
     Color: {r: 1, g: 1, b: 1, a: 1}
@@ -299,8 +299,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactables:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2853090837240470407}
+  - {fileID: 6178239571689111423}
   _data: {fileID: 0}
 --- !u!1 &324814021462895660
 GameObject:
@@ -350,8 +350,8 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 5697275897815793612}
-  _rigidbody: {fileID: 5912673806911751698}
+  _pointableElement: {fileID: 1121256932247187221}
+  _rigidbody: {fileID: 6373054452272815710}
   _physicsGrabbable: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
   _scoringModifier:
@@ -423,8 +423,8 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 5697275897815793612}
-  _rigidbody: {fileID: 5912673806911751698}
+  _pointableElement: {fileID: 6685942349558028698}
+  _rigidbody: {fileID: 8405144298245241971}
   _physicsGrabbable: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
   _scoringModifier:
@@ -605,8 +605,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3266c3d920715b84089935c4ab019210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableView: {fileID: 0}
-  _editor: {fileID: 0}
+  _interactableView: {fileID: 1749226613299626857}
+  _editor: {fileID: 4579401420725390017}
   _colorShaderPropertyName: _Color
   _normalColorState:
     Color: {r: 1, g: 1, b: 1, a: 1}
@@ -747,8 +747,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactables:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 5832390391252646044}
+  - {fileID: 8937008491053308944}
   _data: {fileID: 0}
 --- !u!1 &1835911255561041975
 GameObject:
@@ -830,8 +830,8 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 5697275897815793612}
-  _rigidbody: {fileID: 5912673806911751698}
+  _pointableElement: {fileID: 7575549117686982039}
+  _rigidbody: {fileID: 1995174469991807840}
   _physicsGrabbable: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
   _scoringModifier:
@@ -903,7 +903,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 0}
+  _pointableElement: {fileID: 1382220469642452632}
   _rigidbody: {fileID: 8815816223284771048}
   _grabSource: {fileID: 0}
   _useClosestPointAsGrabSource: 0
@@ -1035,8 +1035,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3266c3d920715b84089935c4ab019210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableView: {fileID: 0}
-  _editor: {fileID: 0}
+  _interactableView: {fileID: 9147061801161536824}
+  _editor: {fileID: 1607224171804534808}
   _colorShaderPropertyName: _Color
   _normalColorState:
     Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1177,8 +1177,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactables:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1574279169821997007}
+  - {fileID: 4094526691376134274}
   _data: {fileID: 0}
 --- !u!1 &1920184336487710482
 GameObject:
@@ -1228,8 +1228,8 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 5697275897815793612}
-  _rigidbody: {fileID: 5912673806911751698}
+  _pointableElement: {fileID: 2846634227025666528}
+  _rigidbody: {fileID: 1474405417765571301}
   _physicsGrabbable: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
   _scoringModifier:
@@ -1451,8 +1451,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3266c3d920715b84089935c4ab019210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableView: {fileID: 0}
-  _editor: {fileID: 0}
+  _interactableView: {fileID: 4916202984909868180}
+  _editor: {fileID: 8732358064442601562}
   _colorShaderPropertyName: _Color
   _normalColorState:
     Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1593,8 +1593,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactables:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8347564138403161103}
+  - {fileID: 342246569819749133}
   _data: {fileID: 0}
 --- !u!1 &2448071036197579764
 GameObject:
@@ -1683,7 +1683,7 @@ MonoBehaviour:
   _transferOnSecondSelection: 0
   _addNewPointsToFront: 0
   _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
+  _oneGrabTransformer: {fileID: 9192426859659754005}
   _twoGrabTransformer: {fileID: 0}
   _targetTransform: {fileID: 0}
   _maxGrabPoints: -1
@@ -1825,7 +1825,7 @@ MonoBehaviour:
   _transferOnSecondSelection: 0
   _addNewPointsToFront: 0
   _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
+  _oneGrabTransformer: {fileID: 3252591404424770923}
   _twoGrabTransformer: {fileID: 0}
   _targetTransform: {fileID: 0}
   _maxGrabPoints: -1
@@ -1848,11 +1848,11 @@ MonoBehaviour:
   _rotationAxis: 1
   _constraints:
     MinAngle:
-      Constrain: 0
-      Value: 0
+      Constrain: 1
+      Value: -135
     MaxAngle:
-      Constrain: 0
-      Value: 0
+      Constrain: 1
+      Value: 135
 --- !u!54 &5918591154515260832
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2005,8 +2005,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3266c3d920715b84089935c4ab019210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableView: {fileID: 0}
-  _editor: {fileID: 0}
+  _interactableView: {fileID: 7185079842730935945}
+  _editor: {fileID: 1162688589712637229}
   _colorShaderPropertyName: _Color
   _normalColorState:
     Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2147,8 +2147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactables:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 7654790265922117951}
+  - {fileID: 271147291747223016}
   _data: {fileID: 0}
 --- !u!1 &2789222418323388036
 GameObject:
@@ -2226,7 +2226,7 @@ MonoBehaviour:
   _transferOnSecondSelection: 0
   _addNewPointsToFront: 0
   _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
+  _oneGrabTransformer: {fileID: 5931691034582252267}
   _twoGrabTransformer: {fileID: 0}
   _targetTransform: {fileID: 0}
   _maxGrabPoints: -1
@@ -2249,11 +2249,11 @@ MonoBehaviour:
   _rotationAxis: 1
   _constraints:
     MinAngle:
-      Constrain: 0
-      Value: 0
+      Constrain: 1
+      Value: -135
     MaxAngle:
-      Constrain: 0
-      Value: 0
+      Constrain: 1
+      Value: 135
 --- !u!54 &4404393242847934972
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2357,7 +2357,7 @@ MonoBehaviour:
   _transferOnSecondSelection: 0
   _addNewPointsToFront: 0
   _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
+  _oneGrabTransformer: {fileID: 6380330015462993606}
   _twoGrabTransformer: {fileID: 0}
   _targetTransform: {fileID: 0}
   _maxGrabPoints: -1
@@ -2380,11 +2380,11 @@ MonoBehaviour:
   _rotationAxis: 1
   _constraints:
     MinAngle:
-      Constrain: 0
-      Value: 0
+      Constrain: 1
+      Value: -135
     MaxAngle:
-      Constrain: 0
-      Value: 0
+      Constrain: 1
+      Value: 135
 --- !u!54 &1474405417765571301
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2460,7 +2460,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 0}
+  _pointableElement: {fileID: 7575549117686982039}
   _rigidbody: {fileID: 1995174469991807840}
   _grabSource: {fileID: 0}
   _useClosestPointAsGrabSource: 0
@@ -2543,7 +2543,7 @@ MonoBehaviour:
   _transferOnSecondSelection: 0
   _addNewPointsToFront: 0
   _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
+  _oneGrabTransformer: {fileID: 1075692362652731750}
   _twoGrabTransformer: {fileID: 0}
   _targetTransform: {fileID: 0}
   _maxGrabPoints: -1
@@ -2566,11 +2566,11 @@ MonoBehaviour:
   _rotationAxis: 1
   _constraints:
     MinAngle:
-      Constrain: 0
-      Value: 0
+      Constrain: 1
+      Value: -135
     MaxAngle:
-      Constrain: 0
-      Value: 0
+      Constrain: 1
+      Value: 135
 --- !u!54 &6373054452272815710
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2723,8 +2723,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3266c3d920715b84089935c4ab019210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableView: {fileID: 0}
-  _editor: {fileID: 0}
+  _interactableView: {fileID: 6508086268407517608}
+  _editor: {fileID: 4657469219544409083}
   _colorShaderPropertyName: _Color
   _normalColorState:
     Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2865,8 +2865,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactables:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2108499282816899368}
+  - {fileID: 4991090701535569890}
   _data: {fileID: 0}
 --- !u!1 &3891414936361762690
 GameObject:
@@ -2916,7 +2916,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 0}
+  _pointableElement: {fileID: 7971400936609685704}
   _rigidbody: {fileID: 5918591154515260832}
   _grabSource: {fileID: 0}
   _useClosestPointAsGrabSource: 0
@@ -2971,8 +2971,8 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 5697275897815793612}
-  _rigidbody: {fileID: 5912673806911751698}
+  _pointableElement: {fileID: 7797294184354624871}
+  _rigidbody: {fileID: 3235425898584511552}
   _physicsGrabbable: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
   _scoringModifier:
@@ -3072,7 +3072,7 @@ MonoBehaviour:
   _transferOnSecondSelection: 0
   _addNewPointsToFront: 0
   _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
+  _oneGrabTransformer: {fileID: 2855336939567505731}
   _twoGrabTransformer: {fileID: 0}
   _targetTransform: {fileID: 0}
   _maxGrabPoints: -1
@@ -3095,11 +3095,11 @@ MonoBehaviour:
   _rotationAxis: 1
   _constraints:
     MinAngle:
-      Constrain: 0
-      Value: 0
+      Constrain: 1
+      Value: -135
     MaxAngle:
-      Constrain: 0
-      Value: 0
+      Constrain: 1
+      Value: 135
 --- !u!54 &1995174469991807840
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3234,7 +3234,7 @@ MonoBehaviour:
   _transferOnSecondSelection: 0
   _addNewPointsToFront: 0
   _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
+  _oneGrabTransformer: {fileID: 3827534226681913828}
   _twoGrabTransformer: {fileID: 0}
   _targetTransform: {fileID: 0}
   _maxGrabPoints: -1
@@ -3348,7 +3348,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 0}
+  _pointableElement: {fileID: 7760943642754512794}
   _rigidbody: {fileID: 3599247618483757216}
   _grabSource: {fileID: 0}
   _useClosestPointAsGrabSource: 0
@@ -3673,7 +3673,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 0}
+  _pointableElement: {fileID: 1121256932247187221}
   _rigidbody: {fileID: 6373054452272815710}
   _grabSource: {fileID: 0}
   _useClosestPointAsGrabSource: 0
@@ -3808,8 +3808,8 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 5697275897815793612}
-  _rigidbody: {fileID: 5912673806911751698}
+  _pointableElement: {fileID: 7971400936609685704}
+  _rigidbody: {fileID: 5918591154515260832}
   _physicsGrabbable: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
   _scoringModifier:
@@ -4193,7 +4193,7 @@ MonoBehaviour:
   _transferOnSecondSelection: 0
   _addNewPointsToFront: 0
   _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
+  _oneGrabTransformer: {fileID: 8182561817093018798}
   _twoGrabTransformer: {fileID: 0}
   _targetTransform: {fileID: 0}
   _maxGrabPoints: -1
@@ -4339,7 +4339,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 0}
+  _pointableElement: {fileID: 5697275897815793612}
   _rigidbody: {fileID: 5912673806911751698}
   _grabSource: {fileID: 0}
   _useClosestPointAsGrabSource: 0
@@ -4471,8 +4471,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3266c3d920715b84089935c4ab019210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableView: {fileID: 0}
-  _editor: {fileID: 0}
+  _interactableView: {fileID: 3120740776968984857}
+  _editor: {fileID: 1898078148773508522}
   _colorShaderPropertyName: _Color
   _normalColorState:
     Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4613,8 +4613,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactables:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8105160981362296619}
+  - {fileID: 8376262829539934299}
   _data: {fileID: 0}
 --- !u!1 &8052104747750512820
 GameObject:
@@ -4664,7 +4664,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 0}
+  _pointableElement: {fileID: 2846634227025666528}
   _rigidbody: {fileID: 1474405417765571301}
   _grabSource: {fileID: 0}
   _useClosestPointAsGrabSource: 0
@@ -4796,8 +4796,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3266c3d920715b84089935c4ab019210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableView: {fileID: 0}
-  _editor: {fileID: 0}
+  _interactableView: {fileID: 2746840317023937995}
+  _editor: {fileID: 1060701767562263857}
   _colorShaderPropertyName: _Color
   _normalColorState:
     Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4938,8 +4938,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactables:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 6870064271626341928}
+  - {fileID: 4671909698952197369}
   _data: {fileID: 0}
 --- !u!1 &8228279639781709590
 GameObject:
@@ -5017,7 +5017,7 @@ MonoBehaviour:
   _transferOnSecondSelection: 0
   _addNewPointsToFront: 0
   _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
+  _oneGrabTransformer: {fileID: 1076752314426895091}
   _twoGrabTransformer: {fileID: 0}
   _targetTransform: {fileID: 0}
   _maxGrabPoints: -1
@@ -5040,11 +5040,11 @@ MonoBehaviour:
   _rotationAxis: 1
   _constraints:
     MinAngle:
-      Constrain: 0
-      Value: 0
+      Constrain: 1
+      Value: -135
     MaxAngle:
-      Constrain: 0
-      Value: 0
+      Constrain: 1
+      Value: 135
 --- !u!54 &3235425898584511552
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5120,8 +5120,8 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 5697275897815793612}
-  _rigidbody: {fileID: 5912673806911751698}
+  _pointableElement: {fileID: 5930352743749173113}
+  _rigidbody: {fileID: 4404393242847934972}
   _physicsGrabbable: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
   _scoringModifier:
@@ -5221,7 +5221,7 @@ MonoBehaviour:
   _transferOnSecondSelection: 0
   _addNewPointsToFront: 0
   _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
+  _oneGrabTransformer: {fileID: 8289220945061726915}
   _twoGrabTransformer: {fileID: 0}
   _targetTransform: {fileID: 0}
   _maxGrabPoints: -1
@@ -5244,11 +5244,11 @@ MonoBehaviour:
   _rotationAxis: 1
   _constraints:
     MinAngle:
-      Constrain: 0
-      Value: 0
+      Constrain: 1
+      Value: -135
     MaxAngle:
-      Constrain: 0
-      Value: 0
+      Constrain: 1
+      Value: 135
 --- !u!54 &4249058501219823152
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5324,7 +5324,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 0}
+  _pointableElement: {fileID: 7797294184354624871}
   _rigidbody: {fileID: 3235425898584511552}
   _grabSource: {fileID: 0}
   _useClosestPointAsGrabSource: 0
@@ -5379,7 +5379,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 0}
+  _pointableElement: {fileID: 6685942349558028698}
   _rigidbody: {fileID: 8405144298245241971}
   _grabSource: {fileID: 0}
   _useClosestPointAsGrabSource: 0
@@ -5462,7 +5462,7 @@ MonoBehaviour:
   _transferOnSecondSelection: 0
   _addNewPointsToFront: 0
   _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
+  _oneGrabTransformer: {fileID: 405496894212551471}
   _twoGrabTransformer: {fileID: 0}
   _targetTransform: {fileID: 0}
   _maxGrabPoints: -1
@@ -5485,11 +5485,11 @@ MonoBehaviour:
   _rotationAxis: 1
   _constraints:
     MinAngle:
-      Constrain: 0
-      Value: 0
+      Constrain: 1
+      Value: -135
     MaxAngle:
-      Constrain: 0
-      Value: 0
+      Constrain: 1
+      Value: 135
 --- !u!54 &8405144298245241971
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5835,7 +5835,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 0}
+  _pointableElement: {fileID: 2603970120666001623}
   _rigidbody: {fileID: 4249058501219823152}
   _grabSource: {fileID: 0}
   _useClosestPointAsGrabSource: 0
@@ -5922,7 +5922,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 0}
+  _pointableElement: {fileID: 5930352743749173113}
   _rigidbody: {fileID: 4404393242847934972}
   _grabSource: {fileID: 0}
   _useClosestPointAsGrabSource: 0
@@ -5977,8 +5977,8 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 5697275897815793612}
-  _rigidbody: {fileID: 5912673806911751698}
+  _pointableElement: {fileID: 2603970120666001623}
+  _rigidbody: {fileID: 4249058501219823152}
   _physicsGrabbable: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
   _scoringModifier:

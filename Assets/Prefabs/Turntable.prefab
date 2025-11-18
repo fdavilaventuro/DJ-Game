@@ -275,7 +275,7 @@ MonoBehaviour:
   _transferOnSecondSelection: 0
   _addNewPointsToFront: 0
   _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
+  _oneGrabTransformer: {fileID: 1190702591798148463}
   _twoGrabTransformer: {fileID: 0}
   _targetTransform: {fileID: 0}
   _maxGrabPoints: -1
@@ -353,8 +353,8 @@ GameObject:
   - component: {fileID: 5196972250994222198}
   - component: {fileID: 3536260997701756282}
   - component: {fileID: 859240200206321271}
-  - component: {fileID: 8441268941564964235}
   - component: {fileID: 366319277331216538}
+  - component: {fileID: 8441268941564964235}
   - component: {fileID: 3766091852413200341}
   m_Layer: 0
   m_Name: Mesh
@@ -555,22 +555,6 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     ColorTime: 0.1
---- !u!114 &8441268941564964235
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3202103246953908909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bff16bb2b8cae9409e88ec4d3527c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interactables:
-  - {fileID: 3564772560075474963}
-  - {fileID: 4707789538647336168}
-  _data: {fileID: 0}
 --- !u!114 &366319277331216538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,6 +573,22 @@ MonoBehaviour:
   _colorProperties: []
   _floatProperties: []
   _updateEveryFrame: 1
+--- !u!114 &8441268941564964235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3202103246953908909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bff16bb2b8cae9409e88ec4d3527c9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactables:
+  - {fileID: 3564772560075474963}
+  - {fileID: 4707789538647336168}
+  _data: {fileID: 0}
 --- !u!64 &3766091852413200341
 MeshCollider:
   m_ObjectHideFlags: 0
