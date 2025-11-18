@@ -8,7 +8,7 @@ if %ERRORLEVEL% neq 0 (
   exit /b %ERRORLEVEL%
 )
 
-py -3 preprocess_music.py
+py -3 process_music.py
 if %ERRORLEVEL% neq 0 (
   echo Python script failed with code %ERRORLEVEL%
   pause
