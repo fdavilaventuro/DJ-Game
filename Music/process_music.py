@@ -56,7 +56,7 @@ def main():
     for f in input_dir.iterdir():
         if f.is_file() and f.suffix.lower() == ".ogg":
             f.unlink()
-    print("Procesamiento finalizado. Archivos en:", output_dir)
+    print("Processing complete. Files in:", output_dir)
 
 if __name__ == "__main__":
     main()
