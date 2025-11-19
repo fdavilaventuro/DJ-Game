@@ -86,7 +86,7 @@ public class Knob : MonoBehaviour
                     djTable.SetEQLow(value);
                     break;
                 case KnobType.FX:
-                    djTable.SetFXAmount(value);
+                    //djTable.SetFXAmount(value);
                     break;
             }
         }
