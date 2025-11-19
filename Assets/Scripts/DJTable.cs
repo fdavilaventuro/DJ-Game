@@ -7,39 +7,33 @@ public class DJTable : MonoBehaviour
     private FMOD.System system;
     private FMOD.Sound sound;
     private FMOD.Channel channel;
-    private FMOD.DSP pitchShifterDSP;
-    private FMOD.DSP eqDSP; // <-- EQ DSP
+    private FMOD.DSP eqDSP;
 
     // Volume
     private float volume = 1f;
     private float volumeBase = 1f;
     private float crossfadeFactor = 1f;
 
-    // Pitch / Keylock
+    // Pitch (now simple speed control)
     private float targetPitch = 1f;
     private float currentPitch = 1f;
-    private float basePitch = 1f;
-    [SerializeField]
-    private bool keyLockEnabled = false;
     private const float minPitch = 0.94f;
     private const float maxPitch = 1.06f;
 
-    // EQ & FX
+    // EQ
     private float eqHi = 0.5f;
     private float eqMid = 0.5f;
     private float eqLow = 0.5f;
     private float fxAmount = 0f;
 
-    public float VolumeBase => volumeBase;
-
-    // --- Pro Scratch ---
+    // Scratch
     private bool isScratching = false;
-    private uint scratchSamplePosition = 0;
-    private float samplesPerDegree = 0f;
-    private float platterVelocity = 0f;
-    private float friction = 300f;
-    private float maxVelocity = 1000f;
-    private bool motorOn = true;
+    private float lastVinylAngle = 0f;
+    private float accumulatedSeek = 0f;
+    private uint lastPlaybackPos = 0;
+    private float scratchSensitivity = 15f;
+
+    public float VolumeBase => volumeBase;
 
     void Awake()
     {
@@ -50,35 +44,36 @@ public class DJTable : MonoBehaviour
     {
         system.update();
 
-        // Smooth pitch
+        if (!channel.hasHandle() || isScratching)
+            return; // While scratching, pitch is forced to 1
+
+        // Smooth pitch when not scratching
         currentPitch = Mathf.Lerp(currentPitch, targetPitch, Time.deltaTime * 3f);
-
-        if (!channel.hasHandle()) return;
-
-        // --- Pitch / Keylock ---
-        if (keyLockEnabled)
-        {
-            float semitoneShift = Mathf.Log(currentPitch / basePitch, 2f) * 12f;
-            float dspPitch = Mathf.Pow(2f, semitoneShift / 12f);
-            pitchShifterDSP.setParameterFloat((int)DSP_PITCHSHIFT.PITCH, dspPitch);
-        }
-        else
-        {
-            channel.setPitch(currentPitch);
-        }
-
-        // EQ is applied in real-time through DSP, so no need to update each frame unless knobs change
+        channel.setPitch(currentPitch);
     }
+
+    // -----------------------------------------------------------
+    //                        TRACK LOAD
+    // -----------------------------------------------------------
 
     public void LoadTrack(string filePath)
     {
         if (sound.hasHandle())
             sound.release();
 
-        var result = system.createSound(filePath, MODE.DEFAULT | MODE._2D | MODE.CREATESTREAM, out sound);
+        var result = system.createSound(
+            filePath,
+            MODE.DEFAULT | MODE._2D | MODE.CREATESTREAM | MODE.NONBLOCKING,
+            out sound
+        );
+
         if (result != RESULT.OK)
             UnityEngine.Debug.LogError("FMOD load error: " + result);
     }
+
+    // -----------------------------------------------------------
+    //                          PLAY
+    // -----------------------------------------------------------
 
     public void Play()
     {
@@ -108,34 +103,14 @@ public class DJTable : MonoBehaviour
 
         ApplyFinalVolume();
 
-        channel.setPitch(1f);
-        basePitch = 1f;
-        targetPitch = 1f;
-        currentPitch = 1f;
+        targetPitch = currentPitch = 1f;
 
-        SetupDSP();
         SetupEQDSP();
-
-        // Setup scratch
-        sound.getLength(out uint totalSamples, FMOD.TIMEUNIT.PCM);
-        samplesPerDegree = totalSamples / 360f;
-        channel.getPosition(out scratchSamplePosition, FMOD.TIMEUNIT.PCM);
-        platterVelocity = 0f;
     }
 
-    void SetupDSP()
-    {
-        if (!pitchShifterDSP.hasHandle())
-        {
-            system.createDSPByType(DSP_TYPE.PITCHSHIFT, out pitchShifterDSP);
-            pitchShifterDSP.setParameterInt((int)DSP_PITCHSHIFT.FFTSIZE, 8192);
-            pitchShifterDSP.setParameterInt((int)DSP_PITCHSHIFT.MAXCHANNELS, 2);
-            pitchShifterDSP.setParameterFloat((int)DSP_PITCHSHIFT.OVERLAP, 8f);
-            pitchShifterDSP.setParameterFloat((int)DSP_PITCHSHIFT.PITCH, 1f);
-        }
-
-        channel.addDSP(CHANNELCONTROL_DSP_INDEX.TAIL, pitchShifterDSP);
-    }
+    // -----------------------------------------------------------
+    //                       EQ DSP SETUP
+    // -----------------------------------------------------------
 
     void SetupEQDSP()
     {
@@ -143,33 +118,18 @@ public class DJTable : MonoBehaviour
         {
             system.createDSPByType(DSP_TYPE.THREE_EQ, out eqDSP);
 
-            // Initialize to default (0 dB)
             eqDSP.setParameterFloat((int)DSP_THREE_EQ.LOWGAIN, 0f);
             eqDSP.setParameterFloat((int)DSP_THREE_EQ.MIDGAIN, 0f);
             eqDSP.setParameterFloat((int)DSP_THREE_EQ.HIGHGAIN, 0f);
         }
 
         channel.addDSP(CHANNELCONTROL_DSP_INDEX.TAIL, eqDSP);
-        ApplyEQ(); // apply current knob values
+        ApplyEQ();
     }
 
-    public void ToggleKeyLock()
-    {
-        if (!channel.hasHandle() || !pitchShifterDSP.hasHandle()) return;
-
-        keyLockEnabled = !keyLockEnabled;
-
-        if (keyLockEnabled)
-        {
-            basePitch = currentPitch;
-            channel.setPitch(1f);
-        }
-        else
-        {
-            pitchShifterDSP.setParameterFloat((int)DSP_PITCHSHIFT.PITCH, 1f);
-            channel.setPitch(currentPitch);
-        }
-    }
+    // -----------------------------------------------------------
+    //                      VOLUME & PITCH
+    // -----------------------------------------------------------
 
     public void SetBaseVolume(float newVolume)
     {
@@ -193,30 +153,19 @@ public class DJTable : MonoBehaviour
     private void ApplyFinalVolume()
     {
         volume = volumeBase * crossfadeFactor;
-
         if (channel.hasHandle())
             channel.setVolume(volume);
     }
 
     public void SetPitch(float newPitch)
     {
-        currentPitch = Mathf.Clamp(newPitch, minPitch, maxPitch);
-
-        if (!channel.hasHandle()) return;
-
-        if (keyLockEnabled)
-        {
-            float semitoneShift = Mathf.Log(currentPitch / basePitch, 2f) * 12f;
-            float dspPitch = Mathf.Pow(2f, semitoneShift / 12f);
-            pitchShifterDSP.setParameterFloat((int)DSP_PITCHSHIFT.PITCH, dspPitch);
-        }
-        else
-        {
-            channel.setPitch(currentPitch);
-        }
+        targetPitch = Mathf.Clamp(newPitch, minPitch, maxPitch);
     }
 
-    // --- EQ / FX ---
+    // -----------------------------------------------------------
+    //                          EQ
+    // -----------------------------------------------------------
+
     public void SetEQHi(float value)
     {
         eqHi = Mathf.Clamp01(value);
@@ -244,77 +193,80 @@ public class DJTable : MonoBehaviour
     {
         if (!eqDSP.hasHandle()) return;
 
-        // Map 0..1 -> -12 dB .. +12 dB
-        float lowGain = Mathf.Lerp(-12f, 12f, eqLow);
-        float midGain = Mathf.Lerp(-12f, 12f, eqMid);
-        float highGain = Mathf.Lerp(-12f, 12f, eqHi);
-
-        eqDSP.setParameterFloat((int)DSP_THREE_EQ.LOWGAIN, lowGain);
-        eqDSP.setParameterFloat((int)DSP_THREE_EQ.MIDGAIN, midGain);
-        eqDSP.setParameterFloat((int)DSP_THREE_EQ.HIGHGAIN, highGain);
+        eqDSP.setParameterFloat((int)DSP_THREE_EQ.LOWGAIN, Mathf.Lerp(-12f, 12f, eqLow));
+        eqDSP.setParameterFloat((int)DSP_THREE_EQ.MIDGAIN, Mathf.Lerp(-12f, 12f, eqMid));
+        eqDSP.setParameterFloat((int)DSP_THREE_EQ.HIGHGAIN, Mathf.Lerp(-12f, 12f, eqHi));
     }
 
-    // --- Stop ---
+    // -----------------------------------------------------------
+    //                          STOP
+    // -----------------------------------------------------------
+
     public void Stop()
     {
         if (channel.hasHandle()) channel.stop();
-        if (pitchShifterDSP.hasHandle()) pitchShifterDSP.release();
         if (eqDSP.hasHandle()) eqDSP.release();
         if (sound.hasHandle()) sound.release();
     }
 
-    // --- Pro Scratch ---
-    public void StartScratching()
+    // -----------------------------------------------------------
+    //                     SCRATCHING LOGIC
+    // -----------------------------------------------------------
+
+    public void BeginScratch(float initialAngle)
     {
-        if (!channel.hasHandle()) return;
         isScratching = true;
-        channel.setFrequency(0);
+        lastVinylAngle = initialAngle;
+
+        if (channel.hasHandle())
+            channel.getPosition(out lastPlaybackPos, TIMEUNIT.MS);
+
+        channel.setPitch(1f); // Disable pitch variation during scratch
     }
 
-    public void StopScratching()
+    public void ScratchUpdate(float vinylAngleDegrees, float deltaTime)
     {
-        if (!channel.hasHandle()) return;
+        if (!isScratching || !channel.hasHandle())
+            return;
+
+        // Angular difference
+        float delta = Mathf.DeltaAngle(lastVinylAngle, vinylAngleDegrees);
+        lastVinylAngle = vinylAngleDegrees;
+
+        // Convert angular → ms offset
+        float msOffset = delta * scratchSensitivity;
+        accumulatedSeek += msOffset;
+
+        uint trackLen = GetTrackLengthMs();
+        int newPos = Mathf.Clamp((int)(lastPlaybackPos + accumulatedSeek), 0, (int)trackLen);
+
+        channel.setPosition((uint)newPos, TIMEUNIT.MS);
+    }
+
+    public void EndScratch()
+    {
+        if (!channel.hasHandle())
+        {
+            isScratching = false;
+            return;
+        }
+
+        lastPlaybackPos = (uint)Mathf.Clamp(
+            lastPlaybackPos + accumulatedSeek,
+            0,
+            (int)GetTrackLengthMs()
+        );
+
+        channel.setPosition(lastPlaybackPos, TIMEUNIT.MS);
+
+        accumulatedSeek = 0f;
         isScratching = false;
-        channel.setFrequency(0);
     }
 
-    public void UpdateProScratch(float deltaAngle, float deltaTime)
+    private uint GetTrackLengthMs()
     {
-        if (!channel.hasHandle()) return;
-
-        sound.getLength(out uint totalSamples, FMOD.TIMEUNIT.PCM);
-
-        if (isScratching)
-        {
-            platterVelocity = deltaAngle / deltaTime;
-            platterVelocity = Mathf.Clamp(platterVelocity, -maxVelocity, maxVelocity);
-
-            int deltaSamples = (int)(deltaAngle * samplesPerDegree);
-            scratchSamplePosition = (uint)Mathf.Clamp(scratchSamplePosition + deltaSamples, 0, totalSamples - 1);
-            channel.setPosition(scratchSamplePosition, FMOD.TIMEUNIT.PCM);
-        }
-        else
-        {
-            if (Mathf.Abs(platterVelocity) > 0.1f)
-            {
-                float angleStep = platterVelocity * deltaTime;
-                int deltaSamples = (int)(angleStep * samplesPerDegree);
-                scratchSamplePosition = (uint)Mathf.Clamp(scratchSamplePosition + deltaSamples, 0, totalSamples - 1);
-                channel.setPosition(scratchSamplePosition, FMOD.TIMEUNIT.PCM);
-
-                float frictionStep = friction * deltaTime;
-                if (platterVelocity > 0f)
-                    platterVelocity = Mathf.Max(platterVelocity - frictionStep, 0f);
-                else
-                    platterVelocity = Mathf.Min(platterVelocity + frictionStep, 0f);
-            }
-            else if (motorOn)
-            {
-                float motorSpeed = 360f * 0.5f * deltaTime;
-                int deltaSamples = (int)(motorSpeed * samplesPerDegree);
-                scratchSamplePosition = (uint)Mathf.Clamp(scratchSamplePosition + deltaSamples, 0, totalSamples - 1);
-                channel.setPosition(scratchSamplePosition, FMOD.TIMEUNIT.PCM);
-            }
-        }
+        if (!sound.hasHandle()) return 0;
+        sound.getLength(out uint len, TIMEUNIT.MS);
+        return len;
     }
 }
