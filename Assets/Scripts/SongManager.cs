@@ -42,7 +42,21 @@ public class SongManager : MonoBehaviour
         songDropdown.ClearOptions();
         List<string> songNames = new List<string> { "None Playing" };
         foreach (string path in songPaths)
-            songNames.Add(Path.GetFileNameWithoutExtension(path));
+        {
+            string displayName = null;
+
+            if (djTable != null)
+            {
+                displayName = djTable.GetTrackDisplayNameFromFile(path);
+            }
+
+            if (string.IsNullOrEmpty(displayName))
+            {
+                displayName = Path.GetFileNameWithoutExtension(path);
+            }
+
+            songNames.Add(displayName);
+        }
 
         songDropdown.AddOptions(songNames);
         songDropdown.onValueChanged.AddListener(OnSongSelected);

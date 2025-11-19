@@ -6,10 +6,6 @@ public class Crossfader : MonoBehaviour
     [SerializeField] private DJTable leftTable;
     [SerializeField] private DJTable rightTable;
 
-    [Header("Curva del crossfader")]
-    [Tooltip("0 = lineal, 1 = ligera curva, 2 = más pronunciada, etc.")]
-    [SerializeField] private float curvePower = 1f;
-
     /// <summary>
     /// v debe ir en [0..1]: 0 = sólo izquierda, 1 = sólo derecha.
     /// Conecta esto al slider del crossfader (OnValueChanged).

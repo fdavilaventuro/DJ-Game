@@ -1,6 +1,8 @@
 using UnityEngine;
 using FMOD;
 using FMODUnity;
+using System;
+using System.Runtime.InteropServices;
 
 public class DJTable : MonoBehaviour
 {
@@ -72,6 +74,70 @@ public class DJTable : MonoBehaviour
 
         if (result != RESULT.OK)
             UnityEngine.Debug.LogError("FMOD load error: " + result);
+    }
+
+    // -----------------------------------------------------------
+    //                 METADATA: TITLE & ARTIST
+    // -----------------------------------------------------------
+
+    // Devuelve "Artista - Título" leído desde los tags Vorbis del archivo OGG.
+    // Si no encuentra metadata útil, devuelve null.
+    public string GetTrackDisplayNameFromFile(string filePath)
+    {
+        FMOD.Sound tempSound;
+        var result = system.createSound(
+            filePath,
+            MODE.DEFAULT | MODE._2D | MODE.CREATESTREAM,
+            out tempSound
+        );
+
+        if (result != RESULT.OK || !tempSound.hasHandle())
+        {
+            UnityEngine.Debug.LogWarning($"FMOD tag read error for {filePath}: {result}");
+            return null;
+        }
+
+        string title = null;
+        string artist = null;
+
+        tempSound.getNumTags(out int numTags, out int _);
+
+        for (int i = 0; i < numTags; i++)
+        {
+            result = tempSound.getTag(null, i, out TAG tag);
+            if (result != RESULT.OK) continue;
+            if (tag.data == IntPtr.Zero) continue;
+
+            string tagName = tag.name;
+            if (string.IsNullOrEmpty(tagName)) continue;
+
+            string tagNameUpper = tagName.ToUpperInvariant();
+
+            // Solo nos interesan tags de texto de comentarios Vorbis
+            if (tag.type != TAGTYPE.VORBISCOMMENT)
+                continue;
+
+            string value = Marshal.PtrToStringAnsi(tag.data);
+            if (string.IsNullOrEmpty(value)) continue;
+
+            if (title == null && tagNameUpper == "TITLE")
+            {
+                title = value;
+            }
+            else if (artist == null && tagNameUpper == "ARTIST")
+            {
+                artist = value;
+            }
+        }
+
+        tempSound.release();
+
+        if (!string.IsNullOrEmpty(artist) && !string.IsNullOrEmpty(title))
+            return $"{artist} - {title}";
+        if (!string.IsNullOrEmpty(title))
+            return title;
+
+        return null;
     }
 
     // -----------------------------------------------------------
