@@ -3,6 +3,7 @@ using FMOD;
 using FMODUnity;
 using System;
 using System.Runtime.InteropServices;
+using System.Globalization;
 
 public class DJTable : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class DJTable : MonoBehaviour
     private float volume = 1f;
     private float volumeBase = 1f;
     private float crossfadeFactor = 1f;
+    private float replayGainFactor = 1f;
 
     // Pitch
     private float targetPitch = 1f;
@@ -66,6 +68,8 @@ public class DJTable : MonoBehaviour
         if (sound.hasHandle())
             sound.release();
 
+        replayGainFactor = 1f;
+
         var result = system.createSound(
             filePath,
             MODE.DEFAULT | MODE._2D | MODE.CREATESTREAM | MODE.NONBLOCKING,
@@ -73,7 +77,55 @@ public class DJTable : MonoBehaviour
         );
 
         if (result != RESULT.OK)
+        {
             UnityEngine.Debug.LogError("FMOD load error: " + result);
+            return;
+        }
+
+        ReadReplayGainFromSound();
+    }
+
+    // -----------------------------------------------------------
+    //                 REPLAYGAIN: TRACK NORMALIZATION
+    // -----------------------------------------------------------
+
+    private void ReadReplayGainFromSound()
+    {
+        replayGainFactor = 1f;
+
+        if (!sound.hasHandle())
+            return;
+
+        sound.getNumTags(out int numTags, out int _);
+
+        for (int i = 0; i < numTags; i++)
+        {
+            var result = sound.getTag(null, i, out TAG tag);
+            if (result != RESULT.OK) continue;
+            if (tag.data == IntPtr.Zero) continue;
+            if (tag.type != TAGTYPE.VORBISCOMMENT) continue;
+
+            string tagName = tag.name;
+            if (string.IsNullOrEmpty(tagName)) continue;
+
+            if (!tagName.Equals("REPLAYGAIN_TRACK_GAIN", StringComparison.OrdinalIgnoreCase))
+                continue;
+
+            string value = Marshal.PtrToStringAnsi(tag.data);
+            if (string.IsNullOrEmpty(value)) continue;
+
+            string sanitized = value.Trim();
+            int dbIndex = sanitized.IndexOf("dB", StringComparison.OrdinalIgnoreCase);
+            if (dbIndex >= 0)
+                sanitized = sanitized.Substring(0, dbIndex).Trim();
+
+            if (!float.TryParse(sanitized, NumberStyles.Float, CultureInfo.InvariantCulture, out float gainDb))
+                continue;
+
+            replayGainFactor = Mathf.Pow(10f, gainDb / 20f);
+            UnityEngine.Debug.Log($"ReplayGain track gain: {gainDb} dB -> factor {replayGainFactor}");
+            break;
+        }
     }
 
     // -----------------------------------------------------------
@@ -227,7 +279,7 @@ public class DJTable : MonoBehaviour
 
     private void ApplyFinalVolume()
     {
-        volume = volumeBase * crossfadeFactor;
+        volume = volumeBase * crossfadeFactor * replayGainFactor;
         if (channel.hasHandle())
             channel.setVolume(volume);
     }
@@ -277,6 +329,7 @@ public class DJTable : MonoBehaviour
         if (channel.hasHandle()) channel.stop();
         if (eqDSP.hasHandle()) eqDSP.release();
         if (sound.hasHandle()) sound.release();
+        replayGainFactor = 1f;
     }
 
     // -----------------------------------------------------------
