@@ -324,7 +324,7 @@ public class DJTable : MonoBehaviour
         tempSound.release();
 
         if (!string.IsNullOrEmpty(artist) && !string.IsNullOrEmpty(title))
-            return $"{artist} - {title}";
+            return $"{title} - {artist}";
         if (!string.IsNullOrEmpty(title))
             return title;
 

@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9923645}
   - component: {fileID: 9923646}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -728,7 +728,7 @@ GameObject:
   - component: {fileID: 26148852}
   - component: {fileID: 26148851}
   - component: {fileID: 26148850}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Viewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -936,7 +936,7 @@ GameObject:
   - component: {fileID: 60772404}
   - component: {fileID: 60772406}
   - component: {fileID: 60772405}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2045,7 +2045,7 @@ GameObject:
   - component: {fileID: 159194369}
   - component: {fileID: 159194371}
   - component: {fileID: 159194370}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Item Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3633,7 +3633,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 375424742}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Song Selector L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4657,7 +4657,7 @@ GameObject:
   - component: {fileID: 503212246}
   - component: {fileID: 503212248}
   - component: {fileID: 503212247}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6560,7 +6560,7 @@ GameObject:
   - component: {fileID: 649270967}
   - component: {fileID: 649270966}
   - component: {fileID: 649270965}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Template
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6667,7 +6667,7 @@ GameObject:
   - component: {fileID: 653191478}
   - component: {fileID: 653191480}
   - component: {fileID: 653191479}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: CoverArt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6971,7 +6971,7 @@ GameObject:
   - component: {fileID: 695264450}
   - component: {fileID: 695264452}
   - component: {fileID: 695264451}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7297,7 +7297,7 @@ GameObject:
   - component: {fileID: 752146087}
   - component: {fileID: 752146089}
   - component: {fileID: 752146088}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7912,7 +7912,7 @@ GameObject:
   - component: {fileID: 794626634}
   - component: {fileID: 794626636}
   - component: {fileID: 794626635}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Item Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10359,7 +10359,7 @@ GameObject:
   - component: {fileID: 1031808331}
   - component: {fileID: 1031808333}
   - component: {fileID: 1031808332}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10563,7 +10563,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1034885465}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10710,7 +10710,7 @@ GameObject:
   - component: {fileID: 1041511016}
   - component: {fileID: 1041511018}
   - component: {fileID: 1041511017}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Item Checkmark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12264,7 +12264,7 @@ GameObject:
   - component: {fileID: 1175347486}
   - component: {fileID: 1175347485}
   - component: {fileID: 1175347484}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: SongDropdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12567,7 +12567,7 @@ GameObject:
   - component: {fileID: 1187422926}
   - component: {fileID: 1187422925}
   - component: {fileID: 1187422924}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Template
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12675,7 +12675,7 @@ GameObject:
   - component: {fileID: 1195873866}
   - component: {fileID: 1195873865}
   - component: {fileID: 1195873864}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Viewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12764,7 +12764,7 @@ GameObject:
   - component: {fileID: 1198779507}
   - component: {fileID: 1198779509}
   - component: {fileID: 1198779508}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Item Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14632,7 +14632,7 @@ GameObject:
   - component: {fileID: 1329493090}
   - component: {fileID: 1329493092}
   - component: {fileID: 1329493091}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Item Checkmark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14989,7 +14989,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1420586580}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Sliding Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15059,7 +15059,7 @@ GameObject:
   - component: {fileID: 1434157844}
   - component: {fileID: 1434157843}
   - component: {fileID: 1434157842}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Scrollbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15743,7 +15743,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1465849932}
   - component: {fileID: 1465849933}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15951,7 +15951,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1482620961}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16317,7 +16317,7 @@ GameObject:
   - component: {fileID: 1515445687}
   - component: {fileID: 1515445686}
   - component: {fileID: 1515445685}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: SongDropdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16692,7 +16692,7 @@ GameObject:
   - component: {fileID: 1528556237}
   - component: {fileID: 1528556236}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16769,7 +16769,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1528556235}
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 0, y: 0, z: 0.832}
+  m_LocalPosition: {x: 0, y: 0, z: 0.75}
   m_LocalScale: {x: 0.0005, y: 0.0005, z: 0.0005}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -17599,7 +17599,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1668711002}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Song Selector R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17814,7 +17814,7 @@ GameObject:
   - component: {fileID: 1683085674}
   - component: {fileID: 1683085676}
   - component: {fileID: 1683085675}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Item Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18771,7 +18771,7 @@ GameObject:
   - component: {fileID: 1777624858}
   - component: {fileID: 1777624860}
   - component: {fileID: 1777624859}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18847,7 +18847,7 @@ GameObject:
   - component: {fileID: 1779588376}
   - component: {fileID: 1779588375}
   - component: {fileID: 1779588374}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Scrollbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19180,7 +19180,7 @@ GameObject:
   - component: {fileID: 1804038387}
   - component: {fileID: 1804038389}
   - component: {fileID: 1804038388}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: CoverArt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19194,13 +19194,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804038386}
-  m_LocalRotation: {x: 0.03378266, y: 0.25660488, z: 0.12607859, w: 0.9576622}
+  m_LocalRotation: {x: -0.033782683, y: 0.25660488, z: -0.12607867, w: 0.9576622}
   m_LocalPosition: {x: 0, y: 0, z: -250}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 695264450}
-  m_LocalEulerAnglesHint: {x: 0, y: 30, z: 15}
+  m_LocalEulerAnglesHint: {x: 0, y: 30, z: -15}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 700, y: 0}
@@ -19836,7 +19836,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1910647868}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Sliding Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20466,7 +20466,7 @@ GameObject:
   - component: {fileID: 1974193656}
   - component: {fileID: 1974193658}
   - component: {fileID: 1974193657}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20797,7 +20797,7 @@ GameObject:
   - component: {fileID: 2025255399}
   - component: {fileID: 2025255401}
   - component: {fileID: 2025255400}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
