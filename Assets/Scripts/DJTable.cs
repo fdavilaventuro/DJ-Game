@@ -89,9 +89,19 @@ public class DJTable : MonoBehaviour
     // -----------------------------------------------------------
     //                 COVER ART: READ IMAGE FROM TAGS
     // -----------------------------------------------------------
-    public Texture2D ReadCoverArtFromSound()
+    public Texture2D ReadCoverArtFromSound(bool logIfMissing = true)
     {
         if (!sound.hasHandle()) return null;
+
+        // Asegurar que el sound terminó de abrirse si se usó NONBLOCKING
+        sound.getOpenState(out OPENSTATE openState, out uint _, out bool _, out bool _);
+        if (openState != OPENSTATE.READY)
+        {
+            // Todavía no disponible
+            if (logIfMissing)
+                UnityEngine.Debug.Log("Sound aún cargando (openState=" + openState + ")");
+            return null;
+        }
 
         sound.getNumTags(out int numTags, out int _);
         for (int i = 0; i < numTags; i++)
@@ -99,15 +109,18 @@ public class DJTable : MonoBehaviour
             var result = sound.getTag(null, i, out TAG tag);
             if (result != RESULT.OK) continue;
             if (tag.data == IntPtr.Zero) continue;
-            if (tag.type != TAGTYPE.VORBISCOMMENT) continue;
 
             string tagName = tag.name;
             if (string.IsNullOrEmpty(tagName)) continue;
-            if (!tagName.Equals("METADATA_BLOCK_PICTURE", StringComparison.OrdinalIgnoreCase) &&
-                !tagName.Equals("metadata_block_picture", StringComparison.OrdinalIgnoreCase))
+            string tagNameUpper = tagName.ToUpperInvariant();
+
+            // No filtramos estrictamente por tipo porque algunas builds pueden devolver otro tipo distinto
+            if (tagNameUpper != "METADATA_BLOCK_PICTURE" && tag.type == TAGTYPE.VORBISCOMMENT && tagNameUpper != "METADATA_BLOCK_PICTURE")
                 continue;
 
-            // Recuperar la cadena Base64 que contiene el bloque Picture FLAC
+            if (tagNameUpper != "METADATA_BLOCK_PICTURE")
+                continue;
+
             string base64 = Marshal.PtrToStringAnsi(tag.data);
             if (string.IsNullOrEmpty(base64)) continue;
             base64 = base64.Trim();
@@ -124,14 +137,38 @@ public class DJTable : MonoBehaviour
                     tex.filterMode = FilterMode.Bilinear;
                     return tex;
                 }
-                UnityEngine.Debug.LogWarning("No se pudo cargar la imagen embebida (LoadImage falló).");
+                UnityEngine.Debug.LogWarning("No se pudo cargar la imagen embebida (LoadImage falló). Index tag: " + i);
             }
             catch (Exception ex)
             {
-                UnityEngine.Debug.LogWarning("Error parseando METADATA_BLOCK_PICTURE: " + ex.Message);
+                UnityEngine.Debug.LogWarning("Error parseando METADATA_BLOCK_PICTURE (index " + i + "): " + ex.Message);
             }
         }
+
+        if (logIfMissing)
+        {
+            UnityEngine.Debug.LogWarning("No se encontró METADATA_BLOCK_PICTURE. Dump de tags:");
+            DebugDumpTags();
+        }
         return null; // Sin arte
+    }
+
+    private void DebugDumpTags()
+    {
+        if (!sound.hasHandle()) return;
+        sound.getNumTags(out int numTags, out int _);
+        for (int i = 0; i < numTags; i++)
+        {
+            var result = sound.getTag(null, i, out TAG tag);
+            if (result != RESULT.OK) continue;
+            string name = tag.name != null ? tag.name.ToString() : "<null>"; // corrección operador ??
+            string value = "";
+            if (tag.data != IntPtr.Zero)
+            {
+                try { value = Marshal.PtrToStringAnsi(tag.data); } catch { value = "<bin>"; }
+            }
+            UnityEngine.Debug.Log($"[TAG {i}] type={tag.type} name={name} valueHead={(value.Length > 60 ? value.Substring(0, 60) + "..." : value)}");
+        }
     }
 
     private byte[] ExtractImageBytesFromFlacPicture(byte[] raw)

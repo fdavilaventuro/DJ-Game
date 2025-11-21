@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System.Collections; // añadido para coroutine
 
 public class SongManager : MonoBehaviour
 {
@@ -12,12 +13,13 @@ public class SongManager : MonoBehaviour
     public Texture fallbackTexture;
 
     private List<string> songPaths = new List<string>();
+    private Coroutine coverRoutine; // para cancelar cargas previas
 
     void Start()
     {
         LoadSongs();
         PopulateDropdown();
-        coverImage.texture = fallbackTexture;
+        //coverImage.texture = fallbackTexture;
     }
 
     void LoadSongs()
@@ -71,12 +73,33 @@ public class SongManager : MonoBehaviour
         if (index == 0)
         {
             djTable.Stop();
+            if (coverRoutine != null) StopCoroutine(coverRoutine);
+            coverImage.texture = fallbackTexture;
             return;
         }
 
         string selectedPath = songPaths[index - 1];
         djTable.LoadTrack(selectedPath);
-        coverImage.texture = djTable.ReadCoverArtFromSound() ?? fallbackTexture;
-        djTable.Play();
+        djTable.Play(); // reproducir enseguida aunque portada aún no esté lista
+
+        if (coverRoutine != null) StopCoroutine(coverRoutine);
+        coverRoutine = StartCoroutine(LoadCoverArtWhenReady());
+    }
+
+    private IEnumerator LoadCoverArtWhenReady()
+    {
+        Texture2D tex = null;
+        float timeout = 5f; // segundos máximo de espera
+        float elapsed = 0f;
+        // Intentar hasta que FMOD indique READY y devuelva textura
+        while (elapsed < timeout && tex == null)
+        {
+            tex = djTable.ReadCoverArtFromSound(false); // false: no spam de logs
+            if (tex != null) break;
+            elapsed += Time.deltaTime;
+            yield return null; // esperar siguiente frame
+        }
+        coverImage.texture = tex != null ? tex : fallbackTexture;
+        coverRoutine = null;
     }
 }
