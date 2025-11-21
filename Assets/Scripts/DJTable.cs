@@ -4,6 +4,7 @@ using FMODUnity;
 using System;
 using System.Runtime.InteropServices;
 using System.Globalization;
+using System.IO; // añadido para MemoryStream
 
 public class DJTable : MonoBehaviour
 {
@@ -83,6 +84,107 @@ public class DJTable : MonoBehaviour
         }
 
         ReadReplayGainFromSound();
+    }
+
+    // -----------------------------------------------------------
+    //                 COVER ART: READ IMAGE FROM TAGS
+    // -----------------------------------------------------------
+    public Texture2D ReadCoverArtFromSound()
+    {
+        if (!sound.hasHandle()) return null;
+
+        sound.getNumTags(out int numTags, out int _);
+        for (int i = 0; i < numTags; i++)
+        {
+            var result = sound.getTag(null, i, out TAG tag);
+            if (result != RESULT.OK) continue;
+            if (tag.data == IntPtr.Zero) continue;
+            if (tag.type != TAGTYPE.VORBISCOMMENT) continue;
+
+            string tagName = tag.name;
+            if (string.IsNullOrEmpty(tagName)) continue;
+            if (!tagName.Equals("METADATA_BLOCK_PICTURE", StringComparison.OrdinalIgnoreCase) &&
+                !tagName.Equals("metadata_block_picture", StringComparison.OrdinalIgnoreCase))
+                continue;
+
+            // Recuperar la cadena Base64 que contiene el bloque Picture FLAC
+            string base64 = Marshal.PtrToStringAnsi(tag.data);
+            if (string.IsNullOrEmpty(base64)) continue;
+            base64 = base64.Trim();
+            try
+            {
+                byte[] raw = Convert.FromBase64String(base64);
+                byte[] imageBytes = ExtractImageBytesFromFlacPicture(raw);
+                if (imageBytes == null || imageBytes.Length == 0) continue;
+
+                Texture2D tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+                if (tex.LoadImage(imageBytes))
+                {
+                    tex.wrapMode = TextureWrapMode.Clamp;
+                    tex.filterMode = FilterMode.Bilinear;
+                    return tex;
+                }
+                UnityEngine.Debug.LogWarning("No se pudo cargar la imagen embebida (LoadImage falló).");
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogWarning("Error parseando METADATA_BLOCK_PICTURE: " + ex.Message);
+            }
+        }
+        return null; // Sin arte
+    }
+
+    private byte[] ExtractImageBytesFromFlacPicture(byte[] raw)
+    {
+        // Formato FLAC Picture (todos los enteros 32-bit big-endian):
+        // [PictureType][MimeLen][Mime][DescLen][Desc][Width][Height][Depth][Colors][DataLen][Data]
+        try
+        {
+            using (var ms = new MemoryStream(raw))
+            using (var br = new BinaryReader(ms))
+            {
+                int ReadInt32BE()
+                {
+                    byte[] b = br.ReadBytes(4);
+                    if (b.Length < 4) throw new EndOfStreamException();
+                    return (b[0] << 24) | (b[1] << 16) | (b[2] << 8) | b[3];
+                }
+
+                int picType = ReadInt32BE(); // ignorado
+                int mimeLen = ReadInt32BE();
+                string mime = System.Text.Encoding.ASCII.GetString(br.ReadBytes(mimeLen));
+                int descLen = ReadInt32BE();
+                br.ReadBytes(descLen); // desc ignorada
+                int width = ReadInt32BE();
+                int height = ReadInt32BE();
+                int depth = ReadInt32BE(); // ignorado
+                int colors = ReadInt32BE(); // ignorado
+                int dataLen = ReadInt32BE();
+                byte[] data = br.ReadBytes(dataLen);
+
+                if (data.Length != dataLen)
+                    throw new Exception("Tamaño de datos incoherente");
+
+                // Validar que sea JPEG/PNG
+                if (!string.IsNullOrEmpty(mime))
+                {
+                    string m = mime.ToLowerInvariant();
+                    if (!(m.Contains("jpeg") || m.Contains("jpg") || m.Contains("png")))
+                        UnityEngine.Debug.Log("MIME inesperado en picture: " + mime);
+                }
+
+                // Opcional: verificar dimensiones
+                if (width <= 0 || height <= 0)
+                    UnityEngine.Debug.LogWarning("Dimensiones inválidas en METADATA_BLOCK_PICTURE");
+
+                return data;
+            }
+        }
+        catch (Exception e)
+        {
+            UnityEngine.Debug.LogWarning("ExtractImageBytesFromFlacPicture fallo: " + e.Message);
+            return null;
+        }
     }
 
     // -----------------------------------------------------------
