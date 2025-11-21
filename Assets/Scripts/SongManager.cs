@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 
@@ -7,6 +8,8 @@ public class SongManager : MonoBehaviour
 {
     public TMP_Dropdown songDropdown;
     public DJTable djTable;
+    public RawImage coverImage;
+    public Texture fallbackTexture;
 
     private List<string> songPaths = new List<string>();
 
@@ -14,6 +17,7 @@ public class SongManager : MonoBehaviour
     {
         LoadSongs();
         PopulateDropdown();
+        coverImage.texture = fallbackTexture;
     }
 
     void LoadSongs()
@@ -28,7 +32,7 @@ public class SongManager : MonoBehaviour
         string[] files = Directory.GetFiles(folderPath);
         foreach (string file in files)
         {
-            if (file.EndsWith(".mp3") || file.EndsWith(".wav") || file.EndsWith(".ogg"))
+            if (file.EndsWith(".ogg"))
                 songPaths.Add(file);
         }
 
@@ -72,6 +76,7 @@ public class SongManager : MonoBehaviour
 
         string selectedPath = songPaths[index - 1];
         djTable.LoadTrack(selectedPath);
+        coverImage.texture = djTable.ReadCoverArtFromSound() ?? fallbackTexture;
         djTable.Play();
     }
 }
