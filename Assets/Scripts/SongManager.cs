@@ -19,7 +19,7 @@ public class SongManager : MonoBehaviour
     {
         LoadSongs();
         PopulateDropdown();
-        //coverImage.texture = fallbackTexture;
+        coverImage.texture = fallbackTexture;
     }
 
     void LoadSongs()

@@ -6681,16 +6681,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 653191477}
-  m_LocalRotation: {x: 0.000000014901163, y: -0.17583314, z: 0.1015173, w: 0.9791716}
-  m_LocalPosition: {x: 0, y: 0, z: -197}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalRotation: {x: -0.03378265, y: -0.2566048, z: 0.12607859, w: 0.9576622}
+  m_LocalPosition: {x: 0, y: 0, z: -250}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2025255399}
-  m_LocalEulerAnglesHint: {x: 2.046, y: -20.155, z: 11.475}
+  m_LocalEulerAnglesHint: {x: 0, y: -30, z: 15}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -610, y: -114}
+  m_AnchoredPosition: {x: -700, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &653191479
@@ -10806,7 +10806,7 @@ MonoBehaviour:
   songDropdown: {fileID: 1515445685}
   djTable: {fileID: 2116848838}
   coverImage: {fileID: 1804038388}
-  fallbackTexture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
+  fallbackTexture: {fileID: 2800000, guid: c598c6197bcd5d04cb6119e12c55e4f2, type: 3}
 --- !u!4 &1042099887
 Transform:
   m_ObjectHideFlags: 0
@@ -19194,16 +19194,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804038386}
-  m_LocalRotation: {x: -0.000000029802322, y: 0.30624348, z: -0.17680973, w: 0.9353894}
-  m_LocalPosition: {x: 0, y: 0, z: -239}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalRotation: {x: 0.03378266, y: 0.25660488, z: 0.12607859, w: 0.9576622}
+  m_LocalPosition: {x: 0, y: 0, z: -250}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 695264450}
-  m_LocalEulerAnglesHint: {x: 6.217, y: 35.191, z: -19.434}
+  m_LocalEulerAnglesHint: {x: 0, y: 30, z: 15}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 637, y: -138}
+  m_AnchoredPosition: {x: 700, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1804038388
@@ -20439,7 +20439,7 @@ MonoBehaviour:
   songDropdown: {fileID: 1175347484}
   djTable: {fileID: 1442040344}
   coverImage: {fileID: 653191479}
-  fallbackTexture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
+  fallbackTexture: {fileID: 2800000, guid: c598c6197bcd5d04cb6119e12c55e4f2, type: 3}
 --- !u!4 &1962337363
 Transform:
   m_ObjectHideFlags: 0
