@@ -100,3 +100,4 @@ InitTestScene*.unity*
 
 dj_game_BurstDebugInformation_DoNotShip/
 .vscode/
+.conda/
