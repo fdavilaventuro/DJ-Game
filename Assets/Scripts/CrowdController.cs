@@ -11,27 +11,21 @@ public class CrowdController : MonoBehaviour
 
     [Header("Crowd")]
     public GameObject[] clubberPrefabs;
-    public int crowdSize = 40;
-    public float crowdFrontRadiusMin = 1.0f;  // closer to DJ
-    public float crowdFrontRadiusMax = 5.0f;  // closer front area
-    public float clusterSpacing = 1.0f;       // personal space between clubbers
-
-    [Header("Distribution Tweaks")]
-    public float crowdArcAngle = 70f;        // ± degrees for arch
-    public int clusterFrequency = 25;        // % chance to form clusters
-    public int maxClusterSize = 4;
-    public int stragglersMin = 3;
-    public int stragglersMax = 7;
+    public int crowdSize = 30;
+    public Transform areaPointA;
+    public Transform areaPointB;
+    public Transform areaPointC;
+    public Transform areaPointD;
+    public float personalSpace = 1.0f;   // minimum distance between clubbers
 
     [Header("Animations")]
     public AnimationClip[] danceAnimations;
     public AnimationClip[] idleAnimations;
 
-
     private List<Animator> clubbers = new List<Animator>();
     private Dictionary<Animator, PlayableGraph> graphs = new Dictionary<Animator, PlayableGraph>();
-    private bool crowdIsDancing = false;
     private List<Vector3> occupiedPositions = new List<Vector3>();
+    private bool crowdIsDancing = false;
 
     void Start()
     {
@@ -64,100 +58,46 @@ public class CrowdController : MonoBehaviour
         clubbers.Clear();
         occupiedPositions.Clear();
 
-        Vector3 djPos = transform.position;
-        Vector3 forward = transform.forward;
-
-        int spawned = 0;
-        int frontCount = Mathf.RoundToInt(crowdSize * 0.75f);
-
-        // 1. Front arch with clusters
-        while (spawned < frontCount)
+        for (int i = 0; i < crowdSize; i++)
         {
-            Vector3 pos = GetNaturalArchPosition(djPos, forward);
+            Vector3 pos = GetRandomPositionInArea();
             pos = ApplyPersonalSpace(pos);
-
-            SpawnClubber(pos, djPos);
-            spawned++;
-
-            // Cluster
-            if (Random.Range(0, 100) < clusterFrequency)
-            {
-                int clusterSize = Random.Range(1, maxClusterSize + 1);
-                for (int i = 0; i < clusterSize && spawned < frontCount; i++)
-                {
-                    Vector3 offset = new Vector3(
-                        Random.Range(-clusterSpacing, clusterSpacing),
-                        0,
-                        Random.Range(-clusterSpacing, clusterSpacing)
-                    );
-                    Vector3 clusterPos = ApplyPersonalSpace(pos + offset);
-                    SpawnClubber(clusterPos, djPos);
-                    spawned++;
-                }
-            }
-        }
-
-        // 2. Stragglers
-        int stragglers = Random.Range(stragglersMin, stragglersMax);
-        for (int i = 0; i < stragglers; i++)
-        {
-            Vector3 pos = GetStragglerPosition(djPos, forward);
-            pos = ApplyPersonalSpace(pos);
-            SpawnClubber(pos, djPos);
+            SpawnClubber(pos);
         }
 
         StopDancing(); // start idle
     }
 
-    // -------------------------------------------------------------------------
-    // SPAWN HELPERS
-    // -------------------------------------------------------------------------
-
-    Vector3 GetNaturalArchPosition(Vector3 center, Vector3 forward)
+    Vector3 GetRandomPositionInArea()
     {
-        float angle = Random.Range(-crowdArcAngle, crowdArcAngle);
-        Quaternion rot = Quaternion.AngleAxis(angle, Vector3.up);
+        // Bilinear interpolation inside quadrilateral
+        float u = Random.value;
+        float v = Random.value;
 
-        float radius = Random.Range(crowdFrontRadiusMin, crowdFrontRadiusMax);
-        Vector3 basePos = center + (rot * forward * radius);
+        Vector3 top = Vector3.Lerp(areaPointA.position, areaPointB.position, u);
+        Vector3 bottom = Vector3.Lerp(areaPointD.position, areaPointC.position, u);
+        Vector3 pos = Vector3.Lerp(top, bottom, v);
 
-        // Noise for organic spread
-        float noise = Mathf.PerlinNoise(basePos.x * 0.25f, basePos.z * 0.25f);
-        basePos += new Vector3((noise - 0.5f) * clusterSpacing, 0, (noise - 0.5f) * clusterSpacing);
-
-        return basePos;
-    }
-
-    Vector3 GetStragglerPosition(Vector3 center, Vector3 forward)
-    {
-        Vector3 back = center - forward * Random.Range(6f, 10f);
-        back += new Vector3(
-            Random.Range(-5f, 5f),
-            0,
-            Random.Range(-2f, 2f)
-        );
-        return back;
+        return pos;
     }
 
     Vector3 ApplyPersonalSpace(Vector3 pos)
     {
-        // Prevent overlapping positions
         int attempts = 0;
-        while (attempts < 10)
+        while (attempts < 20)
         {
             bool tooClose = false;
             foreach (var other in occupiedPositions)
             {
-                if (Vector3.Distance(pos, other) < clusterSpacing)
+                if (Vector3.Distance(pos, other) < personalSpace)
                 {
                     tooClose = true;
                     break;
                 }
             }
-            if (!tooClose)
-                break;
+            if (!tooClose) break;
 
-            // jitter if too close
+            // jitter slightly to avoid overlap
             pos += new Vector3(Random.Range(-0.5f, 0.5f), 0, Random.Range(-0.5f, 0.5f));
             attempts++;
         }
@@ -166,34 +106,37 @@ public class CrowdController : MonoBehaviour
         return pos;
     }
 
-    void SpawnClubber(Vector3 position, Vector3 djPos)
+    void SpawnClubber(Vector3 position)
     {
         if (clubberPrefabs.Length == 0) return;
 
         int index = Random.Range(0, clubberPrefabs.Length);
         GameObject c = Instantiate(clubberPrefabs[index], position, Quaternion.identity, transform);
 
-        // Orientation
-        float r = Random.value;
-        if (r < 0.70f)
-        {
-            Vector3 dir = (djPos - position);
-            dir.y = 0;
-            c.transform.rotation = Quaternion.LookRotation(dir);
-        }
-        else if (r < 0.90f)
-        {
-            c.transform.rotation = Quaternion.Euler(0, Random.Range(-90f, 90f), 0);
-        }
-        else
-        {
-            c.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360f), 0);
-        }
+        // Base direction towards DJ/player
+        Vector3 targetDir = (transform.position - position);
+        targetDir.y = 0;
+        Quaternion baseRot = Quaternion.identity;
+        if (targetDir != Vector3.zero)
+            baseRot = Quaternion.LookRotation(targetDir);
+
+        // Add random slight rotation for natural variation
+        float yawOffset = Random.Range(-30f, 30f);   // rotate ±30 degrees randomly
+        Quaternion randomYaw = Quaternion.Euler(0, yawOffset, 0);
+
+        // Combine
+        c.transform.rotation = baseRot * randomYaw;
+
+        // Optional: small random tilt for extra life
+        float tiltX = Random.Range(-5f, 5f);
+        float tiltZ = Random.Range(-5f, 5f);
+        c.transform.rotation *= Quaternion.Euler(tiltX, 0, tiltZ);
 
         Animator anim = c.GetComponent<Animator>();
         if (anim != null)
             clubbers.Add(anim);
     }
+
 
     // -------------------------------------------------------------------------
     // PLAYABLE ANIMATION
@@ -230,7 +173,7 @@ public class CrowdController : MonoBehaviour
     }
 
     // -------------------------------------------------------------------------
-    // ANIMATION STATE CONTROL
+    // ANIMATION CONTROL
     // -------------------------------------------------------------------------
 
     void StartDancing()
