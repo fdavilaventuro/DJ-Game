@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 2421fb4e742c7074fbc667babd0e6a42
 ModelImporter:
-  serializedVersion: 21300
+  serializedVersion: 22200
   internalIDToNameTable:
   - first:
       74: -1006720116963578174
@@ -22,8 +22,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 1
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -50,7 +48,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 1
@@ -66,7 +64,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 1
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -75,6 +73,7 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -102,6 +101,7 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -605,8 +605,7 @@ ModelImporter:
     - name: LeftFinger01
       parentName: LeftFinger0
       position: {x: 0.000000057220458, y: 0.028033013, z: 0.0000000077486035}
-      rotation: {x: -0.00000006705522, y: -0.00000027567145, z: -0.0000012754462,
-        w: 1}
+      rotation: {x: -0.00000006705522, y: -0.00000027567145, z: -0.0000012754462, w: 1}
       scale: {x: 1.0000001, y: 0.9999999, z: 1}
     - name: LeftFinger02
       parentName: LeftFinger01
@@ -761,8 +760,7 @@ ModelImporter:
     - name: RightFinger41
       parentName: RightFinger4
       position: {x: 0.000000097900624, y: 0.033952177, z: 0.0000000023841857}
-      rotation: {x: 0.000000052154057, y: -0.0000001490116, z: -0.00000042840833,
-        w: 1}
+      rotation: {x: 0.000000052154057, y: -0.0000001490116, z: -0.00000042840833, w: 1}
       scale: {x: 1.0000006, y: 1.0000002, z: 0.99999994}
     - name: RightFinger42
       parentName: RightFinger41
@@ -827,6 +825,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 0
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 

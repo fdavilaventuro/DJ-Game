@@ -80,11 +80,28 @@ public class DJTable : MonoBehaviour
 
     public bool IsPlaying()
     {
-        if (!channel.hasHandle()) return false;
+        if (!channel.hasHandle())
+            return false;
 
         channel.isPlaying(out bool isPlaying);
-        return isPlaying;
+        channel.getPaused(out bool isPaused);
+        channel.getVolume(out float vol);
+
+        // If muted or paused, treat as stopped
+        if (isPaused || vol < 0.01f)
+            return false;
+
+        // FMOD "isPlaying" is unreliable.
+        // Check if output is actually producing samples.
+        channel.getAudibility(out float audible);
+
+        // If track is silent to the mixer, it's not playing
+        if (audible < 0.01f)
+            return false;
+
+        return true;
     }
+
 
     public void Play()
     {
