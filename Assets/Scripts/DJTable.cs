@@ -334,8 +334,61 @@ public class DJTable : MonoBehaviour
     public string GetTrackInfoFromSound()
     {
         if (!sound.hasHandle()) return null;
-        // Read track title, album and artist from tags
-        return "";
+        // Ensure sound finished opening (NONBLOCKING case)
+        sound.getOpenState(out OPENSTATE openState, out uint _, out bool _, out bool _);
+        if (openState != OPENSTATE.READY)
+            return null; // Not ready yet
+
+        string title = null;
+        string album = null;
+        string artist = null;
+
+        sound.getNumTags(out int numTags, out int _);
+        for (int i = 0; i < numTags; i++)
+        {
+            var result = sound.getTag(null, i, out TAG tag);
+            if (result != RESULT.OK) continue;
+            if (tag.data == IntPtr.Zero) continue;
+            if (tag.type != TAGTYPE.VORBISCOMMENT) continue;
+
+            string tagName = tag.name;
+            if (string.IsNullOrEmpty(tagName)) continue;
+            string tagNameUpper = tagName.ToUpperInvariant();
+
+            string value = Marshal.PtrToStringAnsi(tag.data);
+            if (string.IsNullOrEmpty(value)) continue;
+
+            if (title == null && tagNameUpper == "TITLE")
+                title = value;
+            else if (album == null && tagNameUpper == "ALBUM")
+                album = value;
+            else if (artist == null && tagNameUpper == "ARTIST")
+                artist = value;
+        }
+
+        if (title == null && album == null && artist == null)
+            return null; // No useful metadata
+
+        // New format: "track name \n album name - artist name"
+        // Build first line (track name)
+        string firstLine = title ?? "";
+
+        // Build second line (album name - artist name)
+        string secondLine = "";
+        if (!string.IsNullOrEmpty(album))
+            secondLine = album;
+        if (!string.IsNullOrEmpty(artist))
+            secondLine = string.IsNullOrEmpty(secondLine) ? artist : (secondLine + " - " + artist);
+
+        // If we have a title
+        if (!string.IsNullOrEmpty(firstLine))
+        {
+            // If we also have second line -> combine; else just first line
+            return string.IsNullOrEmpty(secondLine) ? firstLine : (firstLine + "\n" + secondLine);
+        }
+
+        // No title: fall back to second line only (album - artist or artist)
+        return string.IsNullOrEmpty(secondLine) ? null : secondLine;
     }
 
     // -----------------------------------------------------------
