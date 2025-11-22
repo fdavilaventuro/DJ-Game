@@ -14,13 +14,14 @@ public class SongManager : MonoBehaviour
     public TextMeshProUGUI trackInfoText;
 
     private List<string> songPaths = new List<string>();
-    private Coroutine coverRoutine; // para cancelar cargas previas
+    private Coroutine coverRoutine;
 
     void Start()
     {
         LoadSongs();
         PopulateDropdown();
         coverImage.texture = fallbackTexture;
+        trackInfoText.text = "No track playing.";
     }
 
     void LoadSongs()
@@ -92,15 +93,15 @@ public class SongManager : MonoBehaviour
     private IEnumerator LoadCoverArtWhenReady()
     {
         Texture2D tex = null;
-        float timeout = 5f; // segundos máximo de espera
+        float timeout = 5f;
         float elapsed = 0f;
         // Intentar hasta que FMOD indique READY y devuelva textura
         while (elapsed < timeout && tex == null)
         {
-            tex = djTable.ReadCoverArtFromSound(false); // false: no spam de logs
+            tex = djTable.ReadCoverArtFromSound(false);
             if (tex != null) break;
             elapsed += Time.deltaTime;
-            yield return null; // esperar siguiente frame
+            yield return null;
         }
         coverImage.texture = tex != null ? tex : fallbackTexture;
         coverRoutine = null;
