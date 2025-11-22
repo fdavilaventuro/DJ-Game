@@ -331,6 +331,13 @@ public class DJTable : MonoBehaviour
         return null;
     }
 
+    public string GetTrackInfoFromSound()
+    {
+        if (!sound.hasHandle()) return null;
+        // Read track title, album and artist from tags
+        return "";
+    }
+
     // -----------------------------------------------------------
     //                          PLAY
     // -----------------------------------------------------------

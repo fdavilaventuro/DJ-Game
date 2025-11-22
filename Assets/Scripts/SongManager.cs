@@ -11,6 +11,7 @@ public class SongManager : MonoBehaviour
     public DJTable djTable;
     public RawImage coverImage;
     public Texture fallbackTexture;
+    public TextMeshProUGUI trackInfoText;
 
     private List<string> songPaths = new List<string>();
     private Coroutine coverRoutine; // para cancelar cargas previas
@@ -80,7 +81,9 @@ public class SongManager : MonoBehaviour
 
         string selectedPath = songPaths[index - 1];
         djTable.LoadTrack(selectedPath);
-        djTable.Play(); // reproducir enseguida aunque portada aún no esté lista
+        djTable.Play();
+
+        trackInfoText.text = djTable.GetTrackInfoFromSound();
 
         if (coverRoutine != null) StopCoroutine(coverRoutine);
         coverRoutine = StartCoroutine(LoadCoverArtWhenReady());
