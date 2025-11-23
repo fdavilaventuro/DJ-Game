@@ -33,6 +33,8 @@ public class SongManager : MonoBehaviour
     public RawImage coverImage;
     public Texture fallbackTexture;
     public TextMeshProUGUI trackInfoText;
+    [Header("Debug")]
+    public bool autoLoadFirstOnStart = true; // si true, carga automáticamente el primer track
 
     private List<TrackEntry> tracks = new List<TrackEntry>();
 
@@ -42,6 +44,13 @@ public class SongManager : MonoBehaviour
         PopulateDropdown();
         coverImage.texture = fallbackTexture;
         trackInfoText.text = "No track playing.";
+
+        // Autocargar primer track (index 1 porque 0 es "None Playing")
+        if (autoLoadFirstOnStart && songDropdown != null && tracks.Count > 0)
+        {
+            songDropdown.value = 1; // dispara OnValueChanged
+            djTable.Play();
+        }
     }
 
     void LoadSongs()
