@@ -171,7 +171,7 @@ public class SongManager : MonoBehaviour
                 secondLine = "";
 
             string thirdLine = "";
-            bool hasBpm = !string.IsNullOrEmpty(entry.meta.bpm.ToString());
+            bool hasBpm = entry.meta.bpm > 0;
             bool hasKey = !string.IsNullOrEmpty(entry.meta.initial_key);
             bool hasCamelot = !string.IsNullOrEmpty(entry.meta.camelot);
             if (hasBpm)
