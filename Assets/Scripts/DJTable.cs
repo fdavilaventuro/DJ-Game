@@ -1,6 +1,9 @@
 using UnityEngine;
 using FMOD;
 using FMODUnity;
+using System;
+using System.Runtime.InteropServices;
+using System.Globalization;
 
 public class DJTable : MonoBehaviour
 {
@@ -13,6 +16,7 @@ public class DJTable : MonoBehaviour
     private float volume = 1f;
     private float volumeBase = 1f;
     private float crossfadeFactor = 1f;
+    private float replayGainFactor = 1f;
 
     // Pitch
     private float targetPitch = 1f;
@@ -64,6 +68,8 @@ public class DJTable : MonoBehaviour
         if (sound.hasHandle())
             sound.release();
 
+        replayGainFactor = 1f; // se ajustará luego vía SongManager según JSON
+
         var result = system.createSound(
             filePath,
             MODE.DEFAULT | MODE._2D | MODE.CREATESTREAM | MODE.NONBLOCKING,
@@ -71,7 +77,20 @@ public class DJTable : MonoBehaviour
         );
 
         if (result != RESULT.OK)
+        {
             UnityEngine.Debug.LogError("FMOD load error: " + result);
+            return;
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    //                 REPLAYGAIN: TRACK NORMALIZATION
+    // -----------------------------------------------------------
+    public void SetReplayGainDb(float gainDb)
+    {
+        replayGainFactor = Mathf.Pow(10f, gainDb / 20f);
+        ApplyFinalVolume();
     }
 
     // -----------------------------------------------------------
@@ -178,7 +197,7 @@ public class DJTable : MonoBehaviour
 
     private void ApplyFinalVolume()
     {
-        volume = volumeBase * crossfadeFactor;
+        volume = volumeBase * crossfadeFactor * replayGainFactor;
         if (channel.hasHandle())
             channel.setVolume(volume);
     }
@@ -228,6 +247,7 @@ public class DJTable : MonoBehaviour
         if (channel.hasHandle()) channel.stop();
         if (eqDSP.hasHandle()) eqDSP.release();
         if (sound.hasHandle()) sound.release();
+        replayGainFactor = 1f;
     }
 
     // -----------------------------------------------------------

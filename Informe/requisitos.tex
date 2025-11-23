@@ -1,0 +1,153 @@
+\section{Requisitos de diseño y persona}
+
+\subsection{Requerimientos Funcionales}
+
+Al funcionar como un simulador de DJ en realidad virtual, la aplicación debe
+contar con funcionalidades que simulan un equipo verdadero. Para lograrlo,
+proponemos los siguientes requerimientos funcionales.
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|p{8cm}|c|}
+        \hline
+        \textbf{N°} & \textbf{Descripción}                                                                                          & \textbf{Tipo} \\
+        \hline
+        RF01        & El usuario puede interactuar físicamente con el equipo de DJ (mezcladora, platos, perillas, etc.)             & Must have     \\
+        \hline
+        RF02        & El usuario puede reproducir y pausar música con botones en la mesa de DJ                                      & Must have     \\
+        \hline
+        RF03        & El usuario puede cambiar las canciones de los tracks a elección (precargadas o importables)                   & Must have     \\
+        \hline
+        RF04        & El usuario puede incrementar y disminuir el volumen de las canciones                                          & Must have     \\
+        \hline
+        RF05        & El usuario puede cambiar y transicionar entre canciones usando un crossfader                                  & Must have     \\
+        \hline
+        RF06        & El usuario puede aplicar filtros, como low pass, high pass, reverb, EQ, etc                                   & Must have     \\
+        \hline
+        RF07        & El usuario puede mezclar múltiples canciones a la vez                                                         & Should have   \\
+        \hline
+        RF08        & El usuario puede ajustar el tono y la velocidad de las canciones                                              & Should have   \\
+        \hline
+        RF09        & La aplicación debe tener un tutorial que explique las funcionalidades básicas                                 & Must have     \\
+        \hline
+        RF10        & El usuario puede grabar sus mezclas                                                                           & Nice to have  \\
+        \hline
+        RF11        & El setup de DJ debe incluir distintos parlantes, los cuales pueden ser conectados a distintas mesas de mezcla & Nice to have  \\
+        \hline
+        RF12        & El usuario puede girar los discos para controlar las canciones                                                & Nice to have  \\
+        \hline
+        RF13        & La aplicación puede detectar el BPM de las canciones                                                          & Nice to have  \\
+        \hline
+        RF14        & El usuario puede utilizar samples y loops que se ajustan al BPM de las canciones                              & Nice to have  \\
+        \hline
+        RF15        & El usuario puede cambiar el BPM de las canciones en tiempo real                                               & Nice to have  \\
+        \hline
+        RF16        & El usuario puede elegir distintos ambientes para desempeñar su set de DJ                                      & Nice to have  \\
+        \hline
+        RF17        & El usuario puede afectar al público dependiendo de la calidad de su set (ej. animaciones, reacciones)         & Nice to have  \\
+        \hline
+    \end{tabular}
+    \caption{Requerimientos funcionales}
+\end{table}
+
+\newpage{}
+\subsection{Requerimientos no Funcionales}
+
+De forma similar, planteamos requerimientos no funcionales, los cuales ayudarán
+a mejorar la experiencia de usuario.
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|p{8cm}|c|}
+        \hline
+        \textbf{N°} & \textbf{Descripción}                                                             & \textbf{Tipo} \\
+        \hline
+        RNF01       & La aplicación debe ejecutarse a un mínimo de 60 FPS                              & Must have     \\
+        \hline
+        RNF02       & La aplicación no debe tener retrasos perceptibles en el feedback de las acciones & Must have     \\
+        \hline
+        RNF03       & La aplicación debe ser utilizable sin experiencia previa como DJ                 & Should have   \\
+        \hline
+    \end{tabular}
+    \caption{Requerimientos no funcionales}
+\end{table}
+
+\subsection{Audiencia}
+La audiencia objetivo de la aplicación son adolescentes y adultos jóvenes de
+entre 14 y 30 años con un gusto por la música y el mixing. Estas personas
+suelen tener mayor afinidad por géneros musicales como, como EDM, house, etc.,
+los cuales también son comúnmente utilizados en eventos sociales. Por último,
+los usuarios en este rango de edad suelen tener experiencia previa con
+tecnología y videojuegos, lo cual puede facilitar su adaptación a los controles
+de una aplicación VR.\@
+
+\subsection{Especificación de Usuario Final (User Person)}
+\begin{itemize}
+    \item \textbf{Nombre:} Alejandro Casquino
+    \item \textbf{Edad:} 27 años
+    \item \textbf{Ocupación:} Estudiante de arquitectura
+    \item \textbf{Habilidad tecnológica:} Nivel intermedio/alto. Suele jugar videojuegos, con o sin experiencia previa en VR.
+    \item \textbf{Intereses:} Fiestas, música electrónica, festivales, tecnología
+    \item \textbf{Motivación:} Aprender a mezclar música y divertirse con una aplicación de realidad virtual.
+    \item \textbf{Frustraciones:} Difícil acceso a equipos de DJ profesionales
+    \item \textbf{Comportamiento:} Juega videojuegos regularmente, tanto móviles como en PC. Asiste a eventos musicales de forma regular, y tiene curiosidad por la tecnología VR.
+\end{itemize}
+
+\subsection{Objetivo de la Experiencia}
+Al finalizar el desarrollo de la aplicación, nuestro objetivo es obtener un
+simulador de DJ en realidad virtual que permita a los usuarios sin experiencia
+previa en DJ aprender habilidades básica de mixing y divertirse con la música
+en un entorno immersivo.
+
+\subsection{Narrativa}
+Al ponerse el Meta Quest 2, Alejandro se encuentra en el centro de una cabina
+de DJ iluminada por luces de colores neón, al frente de un público virtual que
+baila al ritmo de la música. Frente a él, la mesa brilla con botones, vinilos y
+sliders. Aunque está solo en su habitación, la realidad virtual lo transporta a
+un festival, donde puede sentir el bajo de los parlantes y las voces del
+público.
+
+La experiencia comienza cuando Alejandro elige su primera canción y la mezcla
+con otra, aplicando filtros y efectos. Cada cambio que hace modifica la música
+de forma inmediata. Gracias a los controles fáciles de usar, se puede explorar
+nuevas técnicas de mixing, girar los discos y ajustar el volumen como si
+estuviera en la cabina, sintiendo la emoción propia de un evento de verdad.
+
+A medida que la sesión avanza, Alejandro prueba diferentes géneros musicales.
+Además, un tutorial le ayuda a dominar nuevas funciones, permitiéndole aprender
+nuevas técnicas. Luego de unas horas, Alejandro no sólo aprendió a mezclar
+música, sino que ha vivido una experiencia inmersiva y divertida desde su
+habitación.
+
+\subsection{Arco de la Historia}
+
+\begin{itemize}
+    \item \textbf{Introducción:} El usuario abre la aplicación, y se encuentra en el backstage de un festival musical. Se escucha la música de fondo y la multitud afuera.
+    \item \textbf{Inicio:} El usuario se dirige al escenario principal, donde se encuentra la cabina de DJ.\@ Al entrar, un breve tutorial le da la bienvenida y explica las funciones principales.
+    \item \textbf{Adaptación:} El usuario selecciona su primera canción y experimenta moviendo los controles para mezclarla y aplicar efectos. La multidud virtual reacciona, animando al usuario a seguir.
+    \item \textbf{Desarrollo:} El usuario comienza a experimentar con diferentes técnicas de mezcla, utilizando los efectos y controles disponibles en la cabina de DJ.\@
+    \item \textbf{Clímax:} El usuario se siente completamente inmerso en la experiencia, como si estuviera en un verdadero festival de música. Las luces y el público brillan y saltan al ritmo de la música.
+    \item \textbf{Fin:} El usuario termina su sesión de mezcla, luego de grabar su pista final. Finalmente, regresa al backstage, acompañado de música que disminuye gradualmente.
+\end{itemize}
+
+\newpage{}
+\subsection{Métrica HEART}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|p{5cm}|p{5cm}|}
+        \hline
+        \textbf{Métrica} & \textbf{Descripción}                                                                                                  & \textbf{Indicador}                                               \\
+        \hline
+        Happiness        & Encuestas dentro de la aplicación, así como medición de movimiento de los controles y la cámara                       & Calificación de satisfacción y movimiento frecuente de controles \\
+        \hline
+        Engagement       & Cantidad de tiempo que los usuarios pasan en la aplicación, y la cantidad de canciones distintas utilizadas en el mix & Tiempo de uso medio y variedad de canciones                      \\
+        \hline
+        Adoption         & Número de personas que utilizan la aplicación por primera vez                                                         & Nuevos usuarios por mes                                          \\
+        \hline
+        Retention        & Número de usuarios que prueban la aplicación en un periodo de una semana luego del uso inicial                        & Usuarios recurrentes por semana                                  \\
+        \hline
+        Task Success     & El usuario debe poder aplicar al menos 3 efectos diferentes sin problemas durante una sesión                          & Porcentaje de éxito mayor al 90\%                                \\
+        \hline
+    \end{tabular}
+    \caption{Métrica HEART}
+\end{table}

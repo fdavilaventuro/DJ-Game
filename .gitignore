@@ -99,3 +99,11 @@ InitTestScene*.unity*
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
 dj_game_BurstDebugInformation_DoNotShip/
+.vscode/
+.conda/
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+download_temp/

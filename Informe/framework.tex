@@ -1,0 +1,76 @@
+\section{Framework de Diseño}
+
+El framework de diseño utilizado se basa en un proceso iterativo de
+planteamiento, prototipado, implementación, y evaluación. Primero,
+identificamos las necesidades y funcionalidades necesarias mediante una lluvia
+de ideas y análisis de mesas de DJ reales/virtuales. Luego, creamos un
+prototipo digital 2D para visualizar la interfaz y las posibles interacciones.
+Luego de tener una vista amplia de lo que se necesita implementar, el
+desarrollo se realiza en Unity, utilizando el SDK de interacción VR de Meta.
+Finalmente, una etapa de playtesting y crítica nos permite identificar áreas de
+mejora, las cuales se revisan en la siguiente etapa de desarrollo.
+
+Con el objetivo proveer un UX óptimo y tener una ruta de diseño clara,
+aplicamos los principios de diseño que fueron discutidos en clases.
+
+\subsection{Principios de diseño}
+\begin{itemize}
+    \item \textbf{Signifiers}: Todos los elementos con los cuales el usuario debería poder interactuar
+          están claramente indicados por colores, íconos, o formas que se utilizarán frecuentemente en el lenguaje visual de la aplicación.
+          Con esto, pretendemos que el usuario pueda identificar rápidamente las funcionalidades disponibles, y acelerar el tiempo de aprendizaje.
+    \item \textbf{Feedback}: Cada acción que el usuario realiza tendrá feedback auditivo (opcionalmente, visual). Girar perillas producirá ``clics'', los sliders
+          desplazados por el usuario emitirán sonidos con un tono proporcional a su posición, y los botones sonarán y brillarán al ser presionados.
+    \item \textbf{Mapping}: Los controles físicos de la mesa de mixing estarán configurados para seguir una dirección natural. Por ejemplo, una perilla en sentido
+          horario incrementará el valor que controla (y viceversa). De forma similar, un slider que se mueva hacia arriba incrementará su valor.
+    \item \textbf{Constraints}: Los controles como sliders y perillas tendrán límites físicos que impidan el movimiento. Al alcanzarlos, feedback visual y auditivo
+          comunicará al usuario esta limitación.
+\end{itemize}
+
+\subsection{Heurísticas de Usabilidad}
+\begin{itemize}
+    \item \textbf{Visibilidad del estado del sistema}: La aplicación siempre mostrará información sobre lo que está ocurriendo. Por ejemplo,
+          al cambiar de canción, se reproducirá un sonido de ``scratch'' característico, y la imagen del vinilo cambiará. Una barra de progreso también
+          mostrará la posición del playback de la canción.
+    \item \textbf{Coherencia y estándares}: El lenguaje visual de la aplicación será consistente en todas los botones, perillas, y slider, y usarán
+          íconos similares a los que se ven en mesas de DJ reales. Además, toda interfaz compartira el mismo diseño visual y paleta de colores.
+    \item \textbf{Prevención de errores}: Los vinilos que caigan fuera de la mesa de DJ serán teletransportados automáticamente a su posición original,
+          evitando que el usuario pierda los vinilos.
+    \item \textbf{Recuperación de errores}: Esta heurística será utilizada de forma escasa, dada la naturaleza física de los controles. Ejemplos particulares
+          incluyen el brillo en rojo del botón de reproducción si no hay un vinilo colocado en la mesa.
+    \item \textbf{Ayuda y documentación}: La aplicación tendrá un tutorial que enseñará al usuario las funcionalidades básicas. Este tutorial será opcional,
+          y se podrá acceder a él desde el menú principal.
+\end{itemize}
+
+\subsection{¿Qué pueden lograr los usuarios?}
+Los usuarios podrán vivir la experiencia de ser un DJ en un entorno VR.\@Las
+funcionalidades incluyen:
+
+\begin{itemize}
+    \item Reproducción de música en tiempo real.
+    \item Interacción con controles como perillas y sliders.
+    \item Aplicación de efectos y filtros a las canciones.
+    \item Reproducción de samples y loops complementarios.
+    \item Grabación y reproducción de mezclas.
+\end{itemize}
+
+\subsection{Límites técnicos}
+
+\begin{itemize}
+    \item El uso de hand tracking impide el uso del feedback háptico de los controles,
+          incrementando exponencialmente la importancia del feedback visual y auditivo.
+    \item La precisión de la detección de BPM depende de los algoritmos implementados, y
+          puede impactar la calidad de las mezclas, loops, y el rendimiento de la
+          aplicación. Este último aspecto es importante, ya que la fluidez de la
+          experiencia es indispensable en una aplicación VR.
+    \item La implementación de parlantes y distintas mesas de DJ requiere de una
+          arquitectura de software robusta y altamente modular, lo cual incrementa los
+          tiempos de desarrollo.
+\end{itemize}
+
+\subsection{Profundidad de presencia}
+
+Uno de los objetivos de la aplicación es maximizar la sensación de estar en un
+festival musical. Para lograrlo, se emplearán assets y materiales que creen un
+entorno colorido y dinámico, el cual se adapta a la música que el usuario está
+mezclando. El uso de efectos visuales y auditivos, como luces y el sonido del
+público, buscan maximizar la presencia del usuario en el entorno.
