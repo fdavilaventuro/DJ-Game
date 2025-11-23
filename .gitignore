@@ -106,3 +106,4 @@ dj_game_BurstDebugInformation_DoNotShip/
 *.fls
 *.log
 *.synctex.gz
+download_temp/

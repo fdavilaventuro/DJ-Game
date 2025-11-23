@@ -3,18 +3,39 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
-using System.Collections; // añadido para coroutine
+
+using System; // para [Serializable]
 
 public class SongManager : MonoBehaviour
 {
+    [Serializable]
+    private class TrackMetadata
+    {
+        public string title;
+        public string id;
+        public string filename;
+        public int bpm;
+        public string initial_key;
+        public string camelot;
+        public string replaygain_track_gain;
+        public string replaygain_track_peak;
+        public string cover; // nombre de archivo .png
+    }
+
+    private class TrackEntry
+    {
+        public string audioPath; // ruta absoluta al .ogg
+        public TrackMetadata meta; // puede ser null si no existe json
+        public string coverPath; // ruta absoluta a la portada .png si existe
+    }
+
     public TMP_Dropdown songDropdown;
-    public DJTable djTable;
+    public DJTable djTable; // sigue manejando playback
     public RawImage coverImage;
     public Texture fallbackTexture;
     public TextMeshProUGUI trackInfoText;
 
-    private List<string> songPaths = new List<string>();
-    private Coroutine coverRoutine;
+    private List<TrackEntry> tracks = new List<TrackEntry>();
 
     void Start()
     {
@@ -26,6 +47,7 @@ public class SongManager : MonoBehaviour
 
     void LoadSongs()
     {
+        tracks.Clear();
         string folderPath = Path.Combine(Application.streamingAssetsPath, "Music");
         if (!Directory.Exists(folderPath))
         {
@@ -33,39 +55,51 @@ public class SongManager : MonoBehaviour
             return;
         }
 
-        string[] files = Directory.GetFiles(folderPath);
-        foreach (string file in files)
+        foreach (var file in Directory.GetFiles(folderPath, "*.ogg"))
         {
-            if (file.EndsWith(".ogg"))
-                songPaths.Add(file);
+            var entry = new TrackEntry();
+            entry.audioPath = file;
+
+            string stem = Path.GetFileNameWithoutExtension(file);
+            string jsonPath = Path.Combine(folderPath, stem + ".json");
+            if (File.Exists(jsonPath))
+            {
+                try
+                {
+                    string json = File.ReadAllText(jsonPath);
+                    entry.meta = JsonUtility.FromJson<TrackMetadata>(json);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning($"Failed to parse metadata {jsonPath}: {e.Message}");
+                }
+            }
+
+            string coverFile = stem + ".png";
+            string coverAbs = Path.Combine(folderPath, coverFile);
+            if (File.Exists(coverAbs))
+            {
+                entry.coverPath = coverAbs;
+            }
+
+            tracks.Add(entry);
         }
 
-        Debug.Log($"Loaded {songPaths.Count} songs.");
+        Debug.Log($"Loaded {tracks.Count} songs.");
     }
 
     void PopulateDropdown()
     {
         if (songDropdown == null) return;
-
         songDropdown.ClearOptions();
-        List<string> songNames = new List<string> { "None Playing" };
-        foreach (string path in songPaths)
+        var songNames = new List<string> { "None Playing" };
+        foreach (var t in tracks)
         {
-            string displayName = null;
-
-            if (djTable != null)
-            {
-                displayName = djTable.GetTrackDisplayNameFromFile(path);
-            }
-
-            if (string.IsNullOrEmpty(displayName))
-            {
-                displayName = Path.GetFileNameWithoutExtension(path);
-            }
-
+            string displayName = t.meta != null && !string.IsNullOrEmpty(t.meta.title)
+                ? t.meta.title
+                : Path.GetFileNameWithoutExtension(t.audioPath);
             songNames.Add(displayName);
         }
-
         songDropdown.AddOptions(songNames);
         songDropdown.onValueChanged.AddListener(OnSongSelected);
     }
@@ -75,35 +109,50 @@ public class SongManager : MonoBehaviour
         if (index == 0)
         {
             djTable.Stop();
-            if (coverRoutine != null) StopCoroutine(coverRoutine);
             coverImage.texture = fallbackTexture;
+            trackInfoText.text = "No track playing.";
             return;
         }
 
-        string selectedPath = songPaths[index - 1];
-        djTable.LoadTrack(selectedPath);
+        var entry = tracks[index - 1];
+        djTable.LoadTrack(entry.audioPath);
         djTable.Play();
 
-        trackInfoText.text = djTable.GetTrackInfoFromSound();
-
-        if (coverRoutine != null) StopCoroutine(coverRoutine);
-        coverRoutine = StartCoroutine(LoadCoverArtWhenReady());
-    }
-
-    private IEnumerator LoadCoverArtWhenReady()
-    {
-        Texture2D tex = null;
-        float timeout = 5f;
-        float elapsed = 0f;
-        // Intentar hasta que FMOD indique READY y devuelva textura
-        while (elapsed < timeout && tex == null)
+        // Construir info para UI usando metadata
+        if (entry.meta != null)
         {
-            tex = djTable.ReadCoverArtFromSound(false);
-            if (tex != null) break;
-            elapsed += Time.deltaTime;
-            yield return null;
+            trackInfoText.text = $"{entry.meta.title}\nBPM: {entry.meta.bpm}  Key: {entry.meta.initial_key} ({entry.meta.camelot})";
         }
-        coverImage.texture = tex != null ? tex : fallbackTexture;
-        coverRoutine = null;
+        else
+        {
+            trackInfoText.text = Path.GetFileNameWithoutExtension(entry.audioPath);
+        }
+
+        // Cargar portada desde archivo .png
+        if (!string.IsNullOrEmpty(entry.coverPath))
+        {
+            try
+            {
+                byte[] bytes = File.ReadAllBytes(entry.coverPath);
+                var tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+                if (tex.LoadImage(bytes))
+                {
+                    coverImage.texture = tex;
+                }
+                else
+                {
+                    coverImage.texture = fallbackTexture;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"Failed to load cover {entry.coverPath}: {e.Message}");
+                coverImage.texture = fallbackTexture;
+            }
+        }
+        else
+        {
+            coverImage.texture = fallbackTexture;
+        }
     }
 }
