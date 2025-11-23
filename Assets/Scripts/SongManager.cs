@@ -192,14 +192,7 @@ public class SongManager : MonoBehaviour
             {
                 byte[] bytes = File.ReadAllBytes(entry.coverPath);
                 var tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-                if (tex.LoadImage(bytes))
-                {
-                    coverImage.texture = tex;
-                }
-                else
-                {
-                    coverImage.texture = fallbackTexture;
-                }
+                coverImage.texture = tex.LoadImage(bytes) ? tex : fallbackTexture;
             }
             catch (Exception e)
             {
