@@ -1,0 +1,75 @@
+\section{Prototipo}
+
+El objetivo principal del juego es que el usuario (el DJ) mezcle música en tiempo real para mantener a la audiencia virtual entretenida o para practicar en solitario.
+
+\subsection{Controles y Mapeo 1:1}
+
+El usuario usa controles de movimiento de VR. Sus manos virtuales, visibles en la imagen, imitan los movimientos de sus manos reales. La retroalimentación háptica (vibración) simula la sensación de tocar los discos (para el scratching) o sentir el ``clic'' de los botones y faders.
+
+\subsection{Mecánicas de Mezcla}
+
+El usuario interactúa directamente con el equipo en la cabina:
+
+\begin{itemize}
+    \item \textbf{Platos (Turntables):} Agarrar físicamente el disco virtual para hacer scratch.
+    \item \textbf{Sliders:} Ajustar el pitch (tono) y el tempo (velocidad).
+    \item \textbf{Controles básicos:} Dar ``play/pausa'' y ``cue''.
+    \item \textbf{Mezcladora (Mixer):} Usar los faders de volumen para las canciones, el crossfader para cambiar entre platos, y las perillas de ecualización (EQ) para ajustar bajos, medios y agudos.
+    \item \textbf{Efectos (FX):} Activar y manipular perillas para añadir efectos como reverb, delay o filtros, tal como se haría en un equipo real.
+\end{itemize}
+
+\subsection{El Bucle del Juego (Game Loop)}
+
+\subsubsection{Biblioteca de Música}
+
+El usuario tendría una lista de canciones (virtual) para elegir o subir sus propios archivos.
+
+\subsubsection{Práctica en Solitario}
+
+El usuario tendrá la opción de practicar en un estudio en solitario, un ambiente sin presión para practicar todo lo que quiera.
+
+\subsubsection{Reacción del Público}
+
+El usuario también podrá tocar frente a un público en una discoteca. La audiencia (visible al frente) reaccionaría dinámicamente. Si el DJ hace una buena transición, mantiene el ritmo y usa efectos de forma atractiva, el público bailará más, gritará y la energía del lugar subirá.
+
+\subsubsection{Retroalimentación}
+
+Si el DJ comete errores (mala mezcla, silencio, transiciones fallidas), el público dejará de bailar, empezará a abuchear o incluso a irse.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{dj-demo1.png}\\[4mm]
+  \includegraphics[width=\textwidth]{dj-demo2.png}
+  \caption{Interfaz y visualización del escenario (dj-demo1 y dj-demo2).}
+  \label{fig:dj-demos}
+\end{figure}
+
+\section{Cómo navegaría el usuario (Navegación y UI)}
+
+\subsection{Navegación en el Menú Principal (Fuera de la actuación)}
+
+Al iniciar el juego, el usuario estaría en el estudio.
+
+\subsubsection{Puntero Láser}
+
+El usuario usaría sus controles como punteros láser para apuntar y seleccionar opciones en un menú 2D flotante.
+
+\subsubsection{Opciones}
+
+Aquí seleccionaría modos de juego (``Discoteca'' para pasar al escenario, ``Sesión de práctica'' para quedarse en el estudio), podría personalizar su equipo (elegir diferentes decks o mezcladoras) o accedería a tutoriales.
+
+\subsection{Navegación en el Juego}
+
+Mientras se está en el escenario, no se puede pausar para buscar en un menú. Durante la práctica en el estudio, se puede hacer de todo sin restricciones.
+
+\subsubsection{Pantallas de los Decks}
+
+Las pantallas pequeñas integradas en los decks (visibles en la imagen) serían la interfaz principal. El usuario usaría perillas o touchpads en el deck virtual para navegar por su biblioteca de canciones.
+
+\subsubsection{Gestos de ``Agarrar''}
+
+Para cargar una canción, el usuario la seleccionaría en la pantalla y luego usaría un gesto de ``agarrar'' (apretando el gatillo del control) para ``arrastrarla'' al plato virtual deseado.
+
+\subsubsection{Interfaz Holográfica/Muñeca}
+
+Para salir de la discoteca, el usuario podría mirar su smartwatch virtual. Ahí, podría presionar un botón para salir y terminar el juego prematuramente.

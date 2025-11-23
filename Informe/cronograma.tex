@@ -1,0 +1,261 @@
+\section{Cronograma propuesto}
+
+\subsection{Entregable 1 (15\% - Semana 11)}
+
+\subsubsection{Requerimientos Desarrollados}
+
+\begin{itemize}
+    \item RF01: interacción básica con placeholders
+    \item RF02: botón de play presionable (sin efecto)
+    \item RF04: fader de volumen (muestra valor, pero no controla sonido todavía)
+\end{itemize}
+
+\subsubsection{Objetivo}
+
+Tener un entorno de prueba en el Quest 2 donde el usuario puede ver sus manos e interactuar con un objeto del equipo de DJ.
+
+\subsubsection{Proyecto y VR}
+
+\begin{itemize}
+    \item Crear proyecto en Unity (URP - Universal Render Pipeline).
+    \item Configurar el Meta XR SDK.
+    \item Implementar el rig de VR: El usuario puede ver sus manos (controladores).
+\end{itemize}
+
+\subsubsection{Modelos y Entorno Básico}
+
+\begin{itemize}
+    \item Importar modelos 3D placeholder para la mezcladora y los platos.
+    \item Crear la ``Escena de Prueba'' para alinear la altura y escala del equipo de DJ.
+\end{itemize}
+
+\subsubsection{Interacción Núcleo}
+
+\begin{itemize}
+    \item Implementar la interacción física básica: El usuario puede ``tocar'' los placeholders del equipo y sus controles, pero sin tener funcionalidad aún.
+    \item Botones de \textit{play} presionables presentes en el modelo, mas no reproducen música todavía.
+    \item Script para un solo componente: Un fader de volumen que se puede agarrar y mover, y que imprime su valor en la consola (ej. 0.8).
+\end{itemize}
+
+\subsubsection{Resultado esperado}
+
+El usuario está en una sala vacía, ve sus manos y puede mover un fader de volumen.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Screenshot_2025-11-07-21-44-41-045_com.instructure.candroid.jpg}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Screenshot_2025-11-07-21-45-05-484_com.instructure.candroid.jpg}
+    \label{fig:placeholder}
+\end{figure}
+
+\newpage
+
+\subsection{Entregable 2 (30\% - Semana 12)}
+
+\subsubsection{Requerimientos De}
+
+\begin{itemize}
+    \item RF02: Botón de \textit{play} funcional para reproducir/pausar música.
+    \item RF03: Carga básica de canciones (opciones disponibles predefinidas).
+    \item RF04: Fader de volumen que controla el volumen real de la canción.
+\end{itemize}
+
+\subsubsection{Objetivo}
+
+Implementar el sistema de audio. El usuario debe poder mezclar dos canciones usando el equipo básico.
+
+\subsubsection{Sistema de Carga de Audio}
+
+\begin{itemize}
+    \item Implementar la lógica de carga dinámica de Ogg Vorbis.
+    \item Crear una UI temporal (menú 2D simple) para seleccionar 2 canciones de una lista de 10.
+    \item Asignar las canciones a los AudioSources de ``Plato A'' y ``Plato B''.
+\end{itemize}
+
+\subsubsection{Mezcla Básica}
+
+\begin{itemize}
+    \item Conectar el fader de volumen del Entregable 1 al AudioSource.volume.
+    \item Habilitar el botón de \textit{play} para que reproduzca/pausa la canción en el AudioSource correspondiente.
+    \item Implementar el Crossfader: Un script que controla el volumen de ambos platos simultáneamente (sube A mientras baja B).
+    \item Capacidad limitada de selección de canciones (lista de canciones limitada, sin carga de archivos externos).
+\end{itemize}
+
+\subsubsection{Resultado esperado}
+
+El usuario puede cargar dos canciones y mezclarlas usando los faders de volumen y el crossfader. La mecánica de audio principal está probada.
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Screenshot_2025-11-07-21-46-50-522_com.instructure.candroid.jpg}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Screenshot_2025-11-07-21-47-10-613_com.instructure.candroid.jpg}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Screenshot_2025-11-07-21-47-30-797_com.instructure.candroid.jpg}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Screenshot_2025-11-07-21-48-14-077_com.instructure.candroid.jpg}
+\end{figure}
+\newpage
+
+\subsection{Entregable 3 (50\% - Semana 13)}
+
+\subsubsection{Requerimientos Desarrollados}
+
+\begin{itemize}
+    \item RF01: Interacción avanzada con el deck (scratching en platos, perillas de EQ, botones de rewind(cue)).
+    \item RF06: Aplicar efectos básicos (EQ: Bajos, Medios, Agudos).
+    \item RF16: Primer ambiente implementado (Estudio).
+\end{itemize}
+
+\subsubsection{Objetivo}
+
+Completar el primer ambiente y la funcionalidad completa del deck. El prototipo debe ser jugable en modo solitario.
+
+\subsubsection{Ambiente 1: Estudio}
+
+\begin{itemize}
+    \item Importar los assets 3D finales para el estudio en solitario.
+    \item Implementar la iluminación.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{vlcsnap-2025-11-18-21h42m36s063.png}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{vlcsnap-2025-11-18-21h42m39s236.png}
+\end{figure}
+\newpage
+
+\subsubsection{Interacción Avanzada}
+
+\begin{itemize}
+    \item Implementar el resto de interacciones del deck:
+    \begin{itemize}
+        \item \textbf{Platos (Turntables):} Lógica de Scratching (vincular la velocidad al AudioSource.pitch y time).
+        \item \textbf{Perillas (Knobs):} Scripts para las perillas de ecualización (EQ: Bajos, Medios, Agudos).
+        \item \textbf{Botones:} Botones de ``Cue'' para rewind de canciones.
+    \end{itemize}
+\end{itemize}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{vlcsnap-2025-11-18-21h41m40s015.png}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{vlcsnap-2025-11-18-21h41m42s622.png}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{vlcsnap-2025-11-18-21h41m48s911.png}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{vlcsnap-2025-11-18-21h41m51s485.png}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{vlcsnap-2025-11-18-21h42m00s848.png}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{vlcsnap-2025-11-18-21h42m11s314.png}
+\end{figure}
+
+\subsubsection{Resultado esperado}
+
+Un prototipo funcional. El usuario está en un estudio detallado y tiene control total sobre el equipo de DJ (mezcla, EQs, scratching).
+
+\newpage
+
+\subsection{Entregable 4 (70\% - Semana 14)}
+
+\subsubsection{Requerimientos}
+
+\begin{itemize}
+    \item RF16: Segundo ambiente implementado (Discoteca) con audiencia dinámica básica.
+    \item RF17: Sistema de audiencia básico (reacciona a si la música está sonando o no).
+\end{itemize}
+
+\subsubsection{Objetivo}
+
+Implementar el segundo ambiente y la audiencia.
+
+\subsubsection{Ambiente 2: Discoteca}
+
+\begin{itemize}
+    \item Modelar e importar los assets 3D para la Discoteca.
+\end{itemize}
+
+\subsubsection{Sistema de Audiencia}
+
+\begin{itemize}
+    \item Crear o importar modelos 3D low-poly para el público (siluetas o modelos simples tipo Mii).
+    \item Implementar un script de audiencia básico: El público tiene dos animaciones (Idle y Bailando).
+    \item Lógica simple: Si el AudioSource principal está sonando, el público ``Baila''. Si no, Idle.
+\end{itemize}
+
+\subsubsection{Resultado esperado}
+
+El usuario puede elegir entre el Estudio y la Discoteca. La discoteca tiene un público que reacciona a la música.
+
+\newpage
+
+\subsection{Entregable 5 (100\% - Semana 16)}
+
+\subsubsection{Requerimientos}
+
+\begin{itemize}
+    \item RF01: Interacción completa y pulida con el equipo de DJ.
+    \item RF06: Se añade un efecto extra (filtro low/high pass).
+    \item RF16: Menú principal sólido para seleccionar ambiente.
+    \item RF17: Sistema de audiencia mejorado (reacciona a la calidad de la mezcla).
+\end{itemize}
+
+\subsubsection{Objetivo}
+
+Presentar un prototipo estable, pulido y completo.
+
+\subsubsection{Pulido Avanzado (15\%)}
+
+\begin{itemize}
+    \item Mejorar el sistema de audiencia (ej. que reaccionen a la mezcla o al crossfader).
+    \item Añadir un feature de audio extra (ej. un filtro ``low/high pass'' en la mezcladora).
+    \item Crear un menú principal sólido para seleccionar el ambiente.
+\end{itemize}
+
+\subsubsection{Bug Fixing (Arreglo de errores)}
+
+\begin{itemize}
+    \item Corregir errores con las manos.
+    \item Corregir problemas de carga de audio.
+    \item Ajustar la iluminación, reducir polígonos y optimizar scripts que consuman mucha CPU.
+\end{itemize}
+
+\subsubsection{Usabilidad}
+
+\begin{itemize}
+    \item Ajustar la ``sensibilidad'' de las perillas y el scratching.
+    \item Implementar retroalimentación háptica (vibración) en los controles al tocar botones o hacer scratch.
+\end{itemize}
+
+\subsubsection{Resultado esperado}
+
+Un prototipo completo, optimizado y pulido.
