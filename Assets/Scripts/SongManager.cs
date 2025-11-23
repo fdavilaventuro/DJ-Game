@@ -40,7 +40,7 @@ public class SongManager : MonoBehaviour
     [Header("Debug")]
     public bool autoLoadFirstOnStart = false; // si true, carga automáticamente el primer track
 
-    private List<TrackEntry> tracks = new List<TrackEntry>();
+    private readonly List<TrackEntry> tracks = new List<TrackEntry>();
 
     void Start()
     {
