@@ -19,6 +19,8 @@ public class SongManager : MonoBehaviour
         public string replaygain_track_gain;
         public string replaygain_track_peak;
         public string cover;
+        public string artist; // nuevo campo
+        public string album;  // nuevo campo
     }
 
     private class TrackEntry
@@ -28,13 +30,15 @@ public class SongManager : MonoBehaviour
         public string coverPath;
     }
 
-    public TMP_Dropdown songDropdown;
     public DJTable djTable;
+    [Header("UI Elements")]
+    public TMP_Dropdown songDropdown;
     public RawImage coverImage;
     public Texture fallbackTexture;
+    [Header("Track Info")]
     public TextMeshProUGUI trackInfoText;
     [Header("Debug")]
-    public bool autoLoadFirstOnStart = true; // si true, carga automáticamente el primer track
+    public bool autoLoadFirstOnStart = false; // si true, carga automáticamente el primer track
 
     private List<TrackEntry> tracks = new List<TrackEntry>();
 
@@ -48,7 +52,10 @@ public class SongManager : MonoBehaviour
         // Autocargar primer track (index 1 porque 0 es "None Playing")
         if (autoLoadFirstOnStart && songDropdown != null && tracks.Count > 0)
         {
-            songDropdown.value = 1; // dispara OnValueChanged
+            // Elegir un track aleatorio (dropdown index 0 es "None Playing")
+            int randomTrack = UnityEngine.Random.Range(0, tracks.Count); // 0..tracks.Count-1
+            songDropdown.value = randomTrack + 1; // dispara OnValueChanged
+            // OnSongSelected ya llama Play(), así que no repetimos.
             djTable.Play();
         }
     }
@@ -108,6 +115,10 @@ public class SongManager : MonoBehaviour
             string displayName = t.meta != null && !string.IsNullOrEmpty(t.meta.title)
                 ? t.meta.title
                 : Path.GetFileNameWithoutExtension(t.audioPath);
+            if (t.meta != null && !string.IsNullOrEmpty(t.meta.artist))
+            {
+                displayName += " - " + t.meta.artist;
+            }
             songNames.Add(displayName);
         }
         songDropdown.AddOptions(songNames);
@@ -143,7 +154,31 @@ public class SongManager : MonoBehaviour
         // Construir info para UI usando metadata
         if (entry.meta != null)
         {
-            trackInfoText.text = $"{entry.meta.title}\nBPM: {entry.meta.bpm}  Key: {entry.meta.initial_key} ({entry.meta.camelot})";
+            string firstLine = !string.IsNullOrEmpty(entry.meta.title)
+                ? entry.meta.title
+                : Path.GetFileNameWithoutExtension(entry.audioPath);
+
+            string secondLine = "";
+            bool hasArtist = !string.IsNullOrEmpty(entry.meta.artist);
+            bool hasAlbum = !string.IsNullOrEmpty(entry.meta.album);
+            if (hasArtist)
+                secondLine = entry.meta.artist;
+            secondLine += " - ";
+            if (hasAlbum)
+                secondLine += entry.meta.album;
+
+            string thirdLine = "";
+            bool hasBpm = !string.IsNullOrEmpty(entry.meta.bpm.ToString());
+            bool hasKey = !string.IsNullOrEmpty(entry.meta.initial_key);
+            bool hasCamelot = !string.IsNullOrEmpty(entry.meta.camelot);
+            if (hasBpm)
+                thirdLine += $"BPM: {entry.meta.bpm} ";
+            if (hasKey)
+                thirdLine += $"Key: {entry.meta.initial_key}";
+            if (hasCamelot)
+                thirdLine += $"({entry.meta.camelot})";
+
+            trackInfoText.text = firstLine + "\n" + secondLine + "\n" + thirdLine;
         }
         else
         {
