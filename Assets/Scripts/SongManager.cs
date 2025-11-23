@@ -161,11 +161,14 @@ public class SongManager : MonoBehaviour
             string secondLine = "";
             bool hasArtist = !string.IsNullOrEmpty(entry.meta.artist);
             bool hasAlbum = !string.IsNullOrEmpty(entry.meta.album);
-            if (hasArtist)
+            if (hasArtist && hasAlbum)
+                secondLine = entry.meta.artist + " - " + entry.meta.album;
+            else if (hasArtist)
                 secondLine = entry.meta.artist;
-            secondLine += " - ";
-            if (hasAlbum)
-                secondLine += entry.meta.album;
+            else if (hasAlbum)
+                secondLine = entry.meta.album;
+            else
+                secondLine = "";
 
             string thirdLine = "";
             bool hasBpm = !string.IsNullOrEmpty(entry.meta.bpm.ToString());
