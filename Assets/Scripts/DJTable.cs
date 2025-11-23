@@ -68,7 +68,7 @@ public class DJTable : MonoBehaviour
         if (sound.hasHandle())
             sound.release();
 
-        replayGainFactor = 1f;
+        replayGainFactor = 1f; // se ajustará luego vía SongManager según JSON
 
         var result = system.createSound(
             filePath,
@@ -82,50 +82,15 @@ public class DJTable : MonoBehaviour
             return;
         }
 
-        ReadReplayGainFromSound();
     }
 
     // -----------------------------------------------------------
     //                 REPLAYGAIN: TRACK NORMALIZATION
     // -----------------------------------------------------------
-
-    private void ReadReplayGainFromSound()
+    public void SetReplayGainDb(float gainDb)
     {
-        replayGainFactor = 1f;
-
-        if (!sound.hasHandle())
-            return;
-
-        sound.getNumTags(out int numTags, out int _);
-
-        for (int i = 0; i < numTags; i++)
-        {
-            var result = sound.getTag(null, i, out TAG tag);
-            if (result != RESULT.OK) continue;
-            if (tag.data == IntPtr.Zero) continue;
-            if (tag.type != TAGTYPE.VORBISCOMMENT) continue;
-
-            string tagName = tag.name;
-            if (string.IsNullOrEmpty(tagName)) continue;
-
-            if (!tagName.Equals("REPLAYGAIN_TRACK_GAIN", StringComparison.OrdinalIgnoreCase))
-                continue;
-
-            string value = Marshal.PtrToStringAnsi(tag.data);
-            if (string.IsNullOrEmpty(value)) continue;
-
-            string sanitized = value.Trim();
-            int dbIndex = sanitized.IndexOf("dB", StringComparison.OrdinalIgnoreCase);
-            if (dbIndex >= 0)
-                sanitized = sanitized.Substring(0, dbIndex).Trim();
-
-            if (!float.TryParse(sanitized, NumberStyles.Float, CultureInfo.InvariantCulture, out float gainDb))
-                continue;
-
-            replayGainFactor = Mathf.Pow(10f, gainDb / 20f);
-            UnityEngine.Debug.Log($"ReplayGain track gain: {gainDb} dB -> factor {replayGainFactor}");
-            break;
-        }
+        replayGainFactor = Mathf.Pow(10f, gainDb / 20f);
+        ApplyFinalVolume();
     }
 
     // -----------------------------------------------------------

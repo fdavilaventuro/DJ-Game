@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
-
-using System; // para [Serializable]
+using System;
 
 public class SongManager : MonoBehaviour
 {
@@ -19,18 +18,18 @@ public class SongManager : MonoBehaviour
         public string camelot;
         public string replaygain_track_gain;
         public string replaygain_track_peak;
-        public string cover; // nombre de archivo .png
+        public string cover;
     }
 
     private class TrackEntry
     {
-        public string audioPath; // ruta absoluta al .ogg
-        public TrackMetadata meta; // puede ser null si no existe json
-        public string coverPath; // ruta absoluta a la portada .png si existe
+        public string audioPath;
+        public TrackMetadata meta;
+        public string coverPath;
     }
 
     public TMP_Dropdown songDropdown;
-    public DJTable djTable; // sigue manejando playback
+    public DJTable djTable;
     public RawImage coverImage;
     public Texture fallbackTexture;
     public TextMeshProUGUI trackInfoText;
@@ -57,8 +56,10 @@ public class SongManager : MonoBehaviour
 
         foreach (var file in Directory.GetFiles(folderPath, "*.ogg"))
         {
-            var entry = new TrackEntry();
-            entry.audioPath = file;
+            var entry = new TrackEntry
+            {
+                audioPath = file
+            };
 
             string stem = Path.GetFileNameWithoutExtension(file);
             string jsonPath = Path.Combine(folderPath, stem + ".json");
@@ -116,6 +117,18 @@ public class SongManager : MonoBehaviour
 
         var entry = tracks[index - 1];
         djTable.LoadTrack(entry.audioPath);
+        // ReplayGain desde JSON
+        if (entry.meta != null && !string.IsNullOrEmpty(entry.meta.replaygain_track_gain))
+        {
+            float gainDb;
+            string g = entry.meta.replaygain_track_gain.Trim();
+            int dbIndex = g.IndexOf("dB", StringComparison.OrdinalIgnoreCase);
+            if (dbIndex >= 0) g = g.Substring(0, dbIndex).Trim();
+            if (float.TryParse(g, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out gainDb))
+            {
+                djTable.SetReplayGainDb(gainDb);
+            }
+        }
         djTable.Play();
 
         // Construir info para UI usando metadata
