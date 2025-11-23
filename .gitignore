@@ -101,3 +101,8 @@ InitTestScene*.unity*
 dj_game_BurstDebugInformation_DoNotShip/
 .vscode/
 .conda/
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
