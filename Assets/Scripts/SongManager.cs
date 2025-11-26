@@ -37,7 +37,7 @@ public class SongManager : MonoBehaviour
     public Texture fallbackTexture;
     public TextMeshProUGUI trackInfo;
     [Header("Debug")]
-    public bool autoLoadTrackOnStart = false; // si true, carga automáticamente el un track
+    public bool autoLoadTrackOnStart = false; // si true, carga automáticamente un track
 
     private readonly List<TrackEntry> tracks = new List<TrackEntry>();
 
