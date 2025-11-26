@@ -7205,6 +7205,10 @@ PrefabInstance:
       propertyPath: _defaultHeight
       value: 0.8
       objectReference: {fileID: 0}
+    - target: {fileID: 3162065387456349882, guid: 46fdef3df9a5a354caf7692f85e5eff2, type: 3}
+      propertyPath: _velocityDisabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5568758619435239312, guid: 46fdef3df9a5a354caf7692f85e5eff2, type: 3}
       propertyPath: _controller
       value: 
@@ -17553,11 +17557,11 @@ SceneRoots:
   - {fileID: 533815551}
   - {fileID: 2146642650}
   - {fileID: 1393517414}
-  - {fileID: 1489153605}
   - {fileID: 1752780394}
-  - {fileID: 471302731}
+  - {fileID: 1489153605}
+  - {fileID: 2105002527}
   - {fileID: 1716568320}
+  - {fileID: 471302731}
   - {fileID: 918106716}
   - {fileID: 2023582753}
   - {fileID: 910970841}
-  - {fileID: 2105002527}

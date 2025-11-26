@@ -124,7 +124,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ed920edb34cd04dac0a21be6f14ceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  djTable: {fileID: 0}
+  grabRotationThreshold: 5
+  releaseThreshold: 1
+  momentumMultiplier: 0.4
+  releaseFriction: 1.4
 --- !u!114 &3804975636294809778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,7 +324,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 4362962105363994262, guid: decad92663060e947b8fd035d4e81d52, type: 3}
-  - {fileID: 7527622100234165253, guid: decad92663060e947b8fd035d4e81d52, type: 3}
+  - {fileID: 2100000, guid: 48b9c8c70d82f6a4282781499ddfe3ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
