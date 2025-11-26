@@ -37,7 +37,7 @@ public class SongManager : MonoBehaviour
     public Texture fallbackTexture;
     public TextMeshProUGUI trackInfo;
     [Header("Debug")]
-    public bool autoLoadFirstOnStart = false; // si true, carga automáticamente el primer track
+    public bool autoLoadTrackOnStart = false; // si true, carga automáticamente el primer track
 
     private readonly List<TrackEntry> tracks = new List<TrackEntry>();
 
@@ -49,7 +49,7 @@ public class SongManager : MonoBehaviour
         trackInfo.text = "No track playing.";
 
         // Autocargar primer track (index 1 porque 0 es "None Playing")
-        if (autoLoadFirstOnStart && songDropdown != null && tracks.Count > 0)
+        if (autoLoadTrackOnStart && songDropdown != null && tracks.Count > 0)
         {
             // Elegir un track aleatorio (dropdown index 0 es "None Playing")
             int randomTrack = UnityEngine.Random.Range(0, tracks.Count); // 0..tracks.Count-1
