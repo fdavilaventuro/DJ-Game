@@ -35,8 +35,7 @@ public class SongManager : MonoBehaviour
     public TMP_Dropdown songDropdown;
     public RawImage coverImage;
     public Texture fallbackTexture;
-    [Header("Track Info")]
-    public TextMeshProUGUI trackInfoText;
+    public TextMeshProUGUI trackInfo;
     [Header("Debug")]
     public bool autoLoadFirstOnStart = false; // si true, carga automáticamente el primer track
 
@@ -47,7 +46,7 @@ public class SongManager : MonoBehaviour
         LoadSongs();
         PopulateDropdown();
         coverImage.texture = fallbackTexture;
-        trackInfoText.text = "No track playing.";
+        trackInfo.text = "No track playing.";
 
         // Autocargar primer track (index 1 porque 0 es "None Playing")
         if (autoLoadFirstOnStart && songDropdown != null && tracks.Count > 0)
@@ -131,7 +130,7 @@ public class SongManager : MonoBehaviour
         {
             djTable.Stop();
             coverImage.texture = fallbackTexture;
-            trackInfoText.text = "No track playing.";
+            trackInfo.text = "No track playing.";
             return;
         }
 
@@ -181,11 +180,11 @@ public class SongManager : MonoBehaviour
             if (hasCamelot)
                 thirdLine += $"({entry.meta.camelot})";
 
-            trackInfoText.text = firstLine + "\n" + secondLine + "\n" + thirdLine;
+            trackInfo.text = firstLine + "\n" + secondLine + "\n" + thirdLine;
         }
         else
         {
-            trackInfoText.text = Path.GetFileNameWithoutExtension(entry.audioPath);
+            trackInfo.text = Path.GetFileNameWithoutExtension(entry.audioPath);
         }
 
         // Cargar portada desde archivo .png

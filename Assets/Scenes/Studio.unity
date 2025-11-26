@@ -9441,9 +9441,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   djTable: {fileID: 2116848838}
   songDropdown: {fileID: 1515445685}
-  coverImage: {fileID: 0}
+  coverImage: {fileID: 4585328517219757307}
   fallbackTexture: {fileID: 2800000, guid: c598c6197bcd5d04cb6119e12c55e4f2, type: 3}
-  trackInfoText: {fileID: 0}
+  trackInfo: {fileID: 4585328517219757306}
   autoLoadFirstOnStart: 0
 --- !u!4 &1042099887
 Transform:
@@ -17356,7 +17356,7 @@ MonoBehaviour:
   songDropdown: {fileID: 1175347484}
   coverImage: {fileID: 838329397}
   fallbackTexture: {fileID: 2800000, guid: c598c6197bcd5d04cb6119e12c55e4f2, type: 3}
-  trackInfoText: {fileID: 1602574025}
+  trackInfo: {fileID: 1602574025}
   autoLoadFirstOnStart: 1
 --- !u!4 &1962337363
 Transform:
@@ -19694,6 +19694,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3150018e34ac084fa7a8f6ac4474df2, type: 3}
+--- !u!114 &4585328517219757306 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3680014064553817493, guid: f3150018e34ac084fa7a8f6ac4474df2, type: 3}
+  m_PrefabInstance: {fileID: 4585328517219757305}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4585328517219757307 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1465992350048853857, guid: f3150018e34ac084fa7a8f6ac4474df2, type: 3}
+  m_PrefabInstance: {fileID: 4585328517219757305}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4833441094757385600
 PrefabInstance:
   m_ObjectHideFlags: 0

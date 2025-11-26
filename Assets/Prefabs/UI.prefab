@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 1162568824389639238}
   - component: {fileID: 3405551274933353202}
   m_Layer: 3
-  m_Name: CoverArt
+  m_Name: CoverImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -574,7 +574,7 @@ GameObject:
   - component: {fileID: 4124752668696419101}
   - component: {fileID: 1465992350048853857}
   m_Layer: 3
-  m_Name: CoverArt
+  m_Name: CoverImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
