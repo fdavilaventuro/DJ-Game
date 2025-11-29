@@ -188,9 +188,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1976871464235327460}
     m_Modifications:
+    - target: {fileID: 1498401924460702777, guid: 817daa5b8c54da547bf750a32fdb4036, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4124451681207092835, guid: 817daa5b8c54da547bf750a32fdb4036, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8615097250905977334, guid: 817daa5b8c54da547bf750a32fdb4036, type: 3}
       propertyPath: m_Name
       value: Desk
+      objectReference: {fileID: 0}
+    - target: {fileID: 8615097250905977334, guid: 817daa5b8c54da547bf750a32fdb4036, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8920567398817870875, guid: 817daa5b8c54da547bf750a32fdb4036, type: 3}
       propertyPath: m_LocalPosition.x
@@ -433,6 +445,10 @@ PrefabInstance:
     - target: {fileID: 1099114898385540403, guid: aa4466cce278efe479011f7bdcd987d6, type: 3}
       propertyPath: m_Name
       value: DJ Table Right
+      objectReference: {fileID: 0}
+    - target: {fileID: 5567880378991613114, guid: aa4466cce278efe479011f7bdcd987d6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7771700330011615693, guid: aa4466cce278efe479011f7bdcd987d6, type: 3}
       propertyPath: m_LocalPosition.x
