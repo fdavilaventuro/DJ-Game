@@ -2,15 +2,18 @@ using UnityEngine;
 using FMOD;
 using FMODUnity;
 using System;
-using System.Runtime.InteropServices;
-using System.Globalization;
 
 public class DJTable : MonoBehaviour
 {
     private FMOD.System system;
     private FMOD.Sound sound;
     private FMOD.Channel channel;
+
     private FMOD.DSP eqDSP;
+
+    // -------- REAL DJ FILTER (using MULTIBAND_EQ) --------
+    private FMOD.DSP lpfDSP;   // LPF side
+    private FMOD.DSP hpfDSP;   // HPF side
 
     // Volume
     private float volume = 1f;
@@ -29,6 +32,9 @@ public class DJTable : MonoBehaviour
     private float eqMid = 0.5f;
     private float eqLow = 0.5f;
 
+    // FILTER FX knob
+    private float fxAmount = 0.0f;
+
     // Scratch
     private bool isScratching = false;
     private float lastVinylAngle = 0f;
@@ -36,7 +42,7 @@ public class DJTable : MonoBehaviour
     private uint lastPlaybackPos = 0;
     private float scratchSensitivity = 15f;
 
-    // --- CUE ---
+    // Cue
     private float cuePointMS = 0f;
     private bool cueHeld = false;
 
@@ -51,7 +57,6 @@ public class DJTable : MonoBehaviour
     {
         system.update();
 
-        // If scratching or holding cue → pitch = 1 always
         if (!channel.hasHandle() || isScratching || cueHeld)
             return;
 
@@ -68,7 +73,7 @@ public class DJTable : MonoBehaviour
         if (sound.hasHandle())
             sound.release();
 
-        replayGainFactor = 1f; // se ajustará luego vía SongManager según JSON
+        replayGainFactor = 1f;
 
         var result = system.createSound(
             filePath,
@@ -81,12 +86,12 @@ public class DJTable : MonoBehaviour
             UnityEngine.Debug.LogError("FMOD load error: " + result);
             return;
         }
-
     }
 
     // -----------------------------------------------------------
-    //                 REPLAYGAIN: TRACK NORMALIZATION
+    //                     REPLAYGAIN
     // -----------------------------------------------------------
+
     public void SetReplayGainDb(float gainDb)
     {
         replayGainFactor = Mathf.Pow(10f, gainDb / 20f);
@@ -99,28 +104,21 @@ public class DJTable : MonoBehaviour
 
     public bool IsPlaying()
     {
-        if (!channel.hasHandle())
-            return false;
+        if (!channel.hasHandle()) return false;
 
         channel.isPlaying(out bool isPlaying);
         channel.getPaused(out bool isPaused);
         channel.getVolume(out float vol);
 
-        // If muted or paused, treat as stopped
         if (isPaused || vol < 0.01f)
             return false;
 
-        // FMOD "isPlaying" is unreliable.
-        // Check if output is actually producing samples.
         channel.getAudibility(out float audible);
-
-        // If track is silent to the mixer, it's not playing
         if (audible < 0.01f)
             return false;
 
         return true;
     }
-
 
     public void Play()
     {
@@ -147,10 +145,10 @@ public class DJTable : MonoBehaviour
         system.playSound(sound, group, false, out channel);
 
         ApplyFinalVolume();
-
         targetPitch = currentPitch = 1f;
 
         SetupEQDSP();
+        SetupFilterDSPs();     // ---- FILTER DSPs ----
     }
 
     // -----------------------------------------------------------
@@ -170,6 +168,87 @@ public class DJTable : MonoBehaviour
 
         channel.addDSP(CHANNELCONTROL_DSP_INDEX.TAIL, eqDSP);
         ApplyEQ();
+    }
+
+    // ===========================================================
+    //            REAL DJ FILTER (LPF on left / HPF on right)
+    // ===========================================================
+
+    void SetupFilterDSPs()
+    {
+        // LPF
+        if (!lpfDSP.hasHandle())
+        {
+            system.createDSPByType(DSP_TYPE.MULTIBAND_EQ, out lpfDSP);
+            lpfDSP.setParameterInt((int)DSP_MULTIBAND_EQ.A_FILTER,
+                (int)DSP_MULTIBAND_EQ_FILTER_TYPE.LOWPASS_12DB);
+            lpfDSP.setParameterFloat((int)DSP_MULTIBAND_EQ.A_FREQUENCY, 22000f);
+            lpfDSP.setParameterFloat((int)DSP_MULTIBAND_EQ.A_Q, 0.7f);
+            lpfDSP.setBypass(true);
+        }
+
+        // HPF
+        if (!hpfDSP.hasHandle())
+        {
+            system.createDSPByType(DSP_TYPE.MULTIBAND_EQ, out hpfDSP);
+            hpfDSP.setParameterInt((int)DSP_MULTIBAND_EQ.A_FILTER,
+                (int)DSP_MULTIBAND_EQ_FILTER_TYPE.HIGHPASS_12DB);
+            hpfDSP.setParameterFloat((int)DSP_MULTIBAND_EQ.A_FREQUENCY, 20f);
+            hpfDSP.setParameterFloat((int)DSP_MULTIBAND_EQ.A_Q, 0.7f);
+            hpfDSP.setBypass(true);
+        }
+
+        channel.addDSP(CHANNELCONTROL_DSP_INDEX.TAIL, lpfDSP);
+        channel.addDSP(CHANNELCONTROL_DSP_INDEX.TAIL, hpfDSP);
+
+        ApplyFilter();
+    }
+
+    public void SetFXAmount(float value)
+    {
+        fxAmount = Mathf.Clamp01(value);
+        ApplyFilter();
+    }
+
+    private void ApplyFilter()
+    {
+        if (!lpfDSP.hasHandle() || !hpfDSP.hasHandle())
+            return;
+
+        float v = fxAmount;  // Knob value 0 → 1
+
+        const float minFreq = 80f;        // lowest cutoff frequency
+        const float maxFreqLPF = 22000f;  // LPF fully open
+        const float maxFreqHPF = 4000f;   // HPF fully open
+
+        if (Mathf.Approximately(v, 0.5f))
+        {
+            // Center: bypass both filters
+            lpfDSP.setBypass(true);
+            hpfDSP.setBypass(true);
+        }
+        else if (v < 0.5f)
+        {
+            // LEFT side = LPF sweep
+            float t = v / 0.5f;                     // 0 → 1 as knob goes left → center
+            float cutoff = Mathf.Lerp(minFreq, maxFreqLPF, t * t);  // quadratic curve
+
+            lpfDSP.setBypass(false);
+            lpfDSP.setParameterFloat((int)DSP_MULTIBAND_EQ.A_FREQUENCY, cutoff);
+
+            hpfDSP.setBypass(true);
+        }
+        else
+        {
+            // RIGHT side = HPF sweep
+            float t = (v - 0.5f) / 0.5f;           // 0 → 1 as knob goes center → right
+            float cutoff = Mathf.Lerp(minFreq, maxFreqHPF, t * t);  // quadratic curve
+
+            hpfDSP.setBypass(false);
+            hpfDSP.setParameterFloat((int)DSP_MULTIBAND_EQ.A_FREQUENCY, cutoff);
+
+            lpfDSP.setBypass(true);
+        }
     }
 
     // -----------------------------------------------------------
@@ -246,12 +325,15 @@ public class DJTable : MonoBehaviour
     {
         if (channel.hasHandle()) channel.stop();
         if (eqDSP.hasHandle()) eqDSP.release();
+        if (lpfDSP.hasHandle()) lpfDSP.release();
+        if (hpfDSP.hasHandle()) hpfDSP.release();
         if (sound.hasHandle()) sound.release();
+
         replayGainFactor = 1f;
     }
 
     // -----------------------------------------------------------
-    //                     SCRATCHING LOGIC
+    //                     SCRATCHING
     // -----------------------------------------------------------
 
     public void BeginScratch(float initialAngle)
@@ -262,7 +344,7 @@ public class DJTable : MonoBehaviour
         if (channel.hasHandle())
             channel.getPosition(out lastPlaybackPos, TIMEUNIT.MS);
 
-        channel.setPitch(1f); // Lock pitch
+        channel.setPitch(1f);
     }
 
     public void ScratchUpdate(float vinylAngleDegrees, float deltaTime)
@@ -310,24 +392,23 @@ public class DJTable : MonoBehaviour
     }
 
     // -----------------------------------------------------------
-    //                          CUE SYSTEM
+    //                          CUE
     // -----------------------------------------------------------
 
     public float GetTrackPositionMS()
     {
         if (!channel.hasHandle()) return 0f;
 
-        channel.getPosition(out uint ms, FMOD.TIMEUNIT.MS);
+        channel.getPosition(out uint ms, TIMEUNIT.MS);
         return ms;
     }
 
     public void SetTrackPositionMS(float ms)
     {
         if (!channel.hasHandle()) return;
-        channel.setPosition((uint)ms, FMOD.TIMEUNIT.MS);
+        channel.setPosition((uint)ms, TIMEUNIT.MS);
     }
 
-    // --- CUE PRESS (BUTTON DOWN) ---
     public void CuePress()
     {
         if (isScratching) return;
@@ -335,18 +416,12 @@ public class DJTable : MonoBehaviour
         channel.getPaused(out bool isPaused);
         channel.isPlaying(out bool isPlaying);
 
-        // --- CASE 1: TRACK DETENIDO (paused or not started) ---
         if (!isPlaying || isPaused)
         {
-            // Siempre obtenemos la posición REAL antes de guardar cue
-            uint pos;
-            channel.getPosition(out pos, FMOD.TIMEUNIT.MS);
-
-            cuePointMS = pos;  // <-- ESTE ES TU NUEVO CUE REAL
-            UnityEngine.Debug.Log("Nuevo punto CUE guardado en: " + cuePointMS + "ms");
+            channel.getPosition(out uint pos, TIMEUNIT.MS);
+            cuePointMS = pos;
         }
 
-        // --- PLAY FROM CUE WHILE HELD ---
         cueHeld = true;
 
         SetTrackPositionMS(cuePointMS);
@@ -354,15 +429,12 @@ public class DJTable : MonoBehaviour
         channel.setPitch(1f);
     }
 
-
-    // --- CUE RELEASE (BUTTON UP) ---
     public void CueRelease()
     {
         cueHeld = false;
 
         if (!channel.hasHandle()) return;
 
-        // Stop & return to cue
         channel.setPaused(true);
         SetTrackPositionMS(cuePointMS);
     }

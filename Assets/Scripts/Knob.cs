@@ -86,7 +86,7 @@ public class Knob : MonoBehaviour
                     djTable.SetEQLow(value);
                     break;
                 case KnobType.FX:
-                    //djTable.SetFXAmount(value);
+                    djTable.SetFXAmount(value);
                     break;
             }
         }
@@ -102,21 +102,24 @@ public class Knob : MonoBehaviour
 
     float GetCurrentLocalAngle()
     {
-        Vector3 axis = localAxis.sqrMagnitude > 0.0001f ? localAxis.normalized : Vector3.up;
+        // Determine which local axis is being used
+        Vector3 axis = localAxis.normalized;
 
-        Vector3 forward = transform.localRotation * Vector3.forward;
+        // Pick which Euler component corresponds to that axis
+        float rawAngle;
+        if (axis == Vector3.right || axis == Vector3.left)
+            rawAngle = transform.localEulerAngles.x;
+        else if (axis == Vector3.up || axis == Vector3.down)
+            rawAngle = transform.localEulerAngles.y;
+        else
+            rawAngle = transform.localEulerAngles.z;
 
-        Vector3 proj = Vector3.ProjectOnPlane(forward, axis);
-        if (proj.sqrMagnitude < 0.0001f)
-            return 0f;
+        // Unwrap 0..360 into -180..180
+        if (rawAngle > 180f)
+            rawAngle -= 360f;
 
-        proj.Normalize();
-
-        Vector3 refDir = Vector3.ProjectOnPlane(Vector3.forward, axis).normalized;
-        if (refDir.sqrMagnitude < 0.0001f)
-            refDir = proj;
-
-        float angle = Vector3.SignedAngle(refDir, proj, axis);
-        return angle;
+        // Clamp to knob rotation limits
+        return Mathf.Clamp(rawAngle, minAngle, maxAngle);
     }
+
 }
