@@ -286,6 +286,9 @@ public class DJTable : MonoBehaviour
         targetPitch = Mathf.Clamp(newPitch, minPitch, maxPitch);
     }
 
+    // Expone el pitch actual (suavizado) para la UI
+    public float CurrentPitch => currentPitch;
+
     // -----------------------------------------------------------
     //                          EQ
     // -----------------------------------------------------------

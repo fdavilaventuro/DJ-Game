@@ -40,6 +40,7 @@ public class SongManager : MonoBehaviour
     public bool autoLoadTrackOnStart = false; // si true, carga automáticamente un track
 
     private readonly List<TrackEntry> tracks = new List<TrackEntry>();
+    private TrackEntry currentEntry; // track seleccionado actual
 
     void Start()
     {
@@ -131,10 +132,12 @@ public class SongManager : MonoBehaviour
             djTable.Stop();
             coverImage.texture = fallbackTexture;
             trackInfo.text = "No track playing.";
+            currentEntry = null; // limpiar selección
             return;
         }
 
         var entry = tracks[index - 1];
+        currentEntry = entry; // guardar track actual
         djTable.LoadTrack(entry.audioPath);
         // ReplayGain desde JSON
         if (entry.meta != null && !string.IsNullOrEmpty(entry.meta.replaygain_track_gain))
@@ -150,44 +153,10 @@ public class SongManager : MonoBehaviour
         }
         djTable.Play();
 
-        // Construir info para UI usando metadata
-        if (entry.meta != null)
-        {
-            string firstLine = !string.IsNullOrEmpty(entry.meta.title)
-                ? entry.meta.title
-                : Path.GetFileNameWithoutExtension(entry.audioPath);
+        // Actualizar UI inicial; luego se mantendrá dinámica en Update
+        UpdateTrackInfoDynamic();
 
-            string secondLine = "";
-            bool hasArtist = !string.IsNullOrEmpty(entry.meta.artist);
-            bool hasAlbum = !string.IsNullOrEmpty(entry.meta.album);
-            if (hasArtist && hasAlbum)
-                secondLine = entry.meta.artist + " - " + entry.meta.album;
-            else if (hasArtist)
-                secondLine = entry.meta.artist;
-            else if (hasAlbum)
-                secondLine = entry.meta.album;
-            else
-                secondLine = "";
-
-            string thirdLine = "";
-            bool hasBpm = entry.meta.bpm > 0;
-            bool hasKey = !string.IsNullOrEmpty(entry.meta.initial_key);
-            bool hasCamelot = !string.IsNullOrEmpty(entry.meta.camelot);
-            if (hasBpm)
-                thirdLine += $"BPM: {entry.meta.bpm} ";
-            if (hasKey)
-                thirdLine += $"Key: {entry.meta.initial_key}";
-            if (hasCamelot)
-                thirdLine += $"({entry.meta.camelot})";
-
-            trackInfo.text = firstLine + "\n" + secondLine + "\n" + thirdLine;
-        }
-        else
-        {
-            trackInfo.text = Path.GetFileNameWithoutExtension(entry.audioPath);
-        }
-
-        // Cargar portada desde archivo .png
+        // Cargar portada
         if (!string.IsNullOrEmpty(entry.coverPath))
         {
             try
@@ -206,5 +175,204 @@ public class SongManager : MonoBehaviour
         {
             coverImage.texture = fallbackTexture;
         }
+    }
+
+    void Update()
+    {
+        // Actualizar dinámicamente BPM/Key cuando hay track activo reproduciendo
+        if (currentEntry != null && djTable != null && djTable.IsPlaying())
+        {
+            UpdateTrackInfoDynamic();
+        }
+    }
+
+    // ---------------- Dinámica BPM / Key ----------------
+    private void UpdateTrackInfoDynamic()
+    {
+        if (currentEntry == null)
+        {
+            trackInfo.text = "No track playing.";
+            return;
+        }
+
+        string firstLine = (currentEntry.meta != null && !string.IsNullOrEmpty(currentEntry.meta.title))
+            ? currentEntry.meta.title
+            : Path.GetFileNameWithoutExtension(currentEntry.audioPath);
+
+        string secondLine = "";
+        if (currentEntry.meta != null)
+        {
+            bool hasArtist = !string.IsNullOrEmpty(currentEntry.meta.artist);
+            bool hasAlbum = !string.IsNullOrEmpty(currentEntry.meta.album);
+            if (hasArtist && hasAlbum)
+                secondLine = currentEntry.meta.artist + " - " + currentEntry.meta.album;
+            else if (hasArtist)
+                secondLine = currentEntry.meta.artist;
+            else if (hasAlbum)
+                secondLine = currentEntry.meta.album;
+        }
+
+        string thirdLine = "";
+        float relPitch = (djTable != null) ? Mathf.Max(0.0001f, djTable.CurrentPitch) : 1f;
+
+        // BPM dinámico
+        if (currentEntry.meta != null && currentEntry.meta.bpm > 0)
+        {
+            int bpmAdjusted = Mathf.Max(1, Mathf.RoundToInt(currentEntry.meta.bpm * relPitch));
+            thirdLine += $"BPM: {bpmAdjusted} ";
+        }
+
+        // Key dinámica
+        string keyStr = currentEntry.meta != null ? currentEntry.meta.initial_key : null;
+        string camelotStr = currentEntry.meta != null ? currentEntry.meta.camelot : null;
+
+        string newKey, newCamelot;
+        if (TryTransposeKey(keyStr, camelotStr, relPitch, out newKey, out newCamelot))
+        {
+            if (!string.IsNullOrEmpty(newKey))
+                thirdLine += $"Key: {newKey}";
+            if (!string.IsNullOrEmpty(newCamelot))
+                thirdLine += $" ({newCamelot})";
+        }
+        else
+        {
+            if (!string.IsNullOrEmpty(keyStr))
+                thirdLine += $"Key: {keyStr}";
+            if (!string.IsNullOrEmpty(camelotStr))
+                thirdLine += $" ({camelotStr})";
+        }
+
+        trackInfo.text = firstLine + "\n" + secondLine + "\n" + thirdLine.Trim();
+    }
+
+    // ---------- Utilidades de transposición ----------
+    private static readonly string[] Notes = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
+
+    private static readonly System.Collections.Generic.Dictionary<string, int> NoteToIndex =
+        new System.Collections.Generic.Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "C",0 }, { "C#",1 }, { "Db",1 },
+            { "D",2 }, { "D#",3 }, { "Eb",3 },
+            { "E",4 }, { "Fb",4 }, { "E#",5 },
+            { "F",5 }, { "F#",6 }, { "Gb",6 },
+            { "G",7 }, { "G#",8 }, { "Ab",8 },
+            { "A",9 }, { "A#",10 }, { "Bb",10 },
+            { "B",11 }, { "Cb",11 }
+        };
+
+    private static readonly System.Collections.Generic.Dictionary<string, string> MajorToCamelot =
+        new System.Collections.Generic.Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "C","8B" }, { "G","9B" }, { "D","10B" }, { "A","11B" }, { "E","12B" },
+            { "B","1B" }, { "F#","2B" }, { "C#","3B" }, { "G#","4B" }, { "Ab","4B" },
+            { "D#","5B" }, { "Eb","5B" }, { "A#","6B" }, { "Bb","6B" }, { "F","7B" }
+        };
+
+    private static readonly System.Collections.Generic.Dictionary<string, string> MinorToCamelot =
+        new System.Collections.Generic.Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "A","8A" }, { "E","9A" }, { "B","10A" }, { "F#","11A" }, { "C#","12A" },
+            { "G#","1A" }, { "Ab","1A" }, { "D#","2A" }, { "Eb","2A" }, { "A#","3A" }, { "Bb","3A" },
+            { "F","4A" }, { "C","5A" }, { "G","6A" }, { "D","7A" }
+        };
+
+    private static readonly System.Collections.Generic.Dictionary<string, (string note, bool minor)> CamelotToNote =
+        new System.Collections.Generic.Dictionary<string, (string, bool)>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "8B",("C",false) }, { "9B",("G",false) }, { "10B",("D",false) }, { "11B",("A",false) }, { "12B",("E",false) },
+            { "1B",("B",false) }, { "2B",("F#",false) }, { "3B",("C#",false) }, { "4B",("G#",false) }, { "5B",("D#",false) },
+            { "6B",("A#",false) }, { "7B",("F",false) },
+
+            { "8A",("A",true) }, { "9A",("E",true) }, { "10A",("B",true) }, { "11A",("F#",true) }, { "12A",("C#",true) },
+            { "1A",("G#",true) }, { "2A",("D#",true) }, { "3A",("A#",true) }, { "4A",("F",true) }, { "5A",("C",true) },
+            { "6A",("G",true) }, { "7A",("D",true) }
+        };
+
+    private static bool TryTransposeKey(string initialKey, string camelot, float relPitch, out string newKey, out string newCamelot)
+    {
+        newKey = null;
+        newCamelot = null;
+
+        int semitones = Mathf.RoundToInt(12f * Mathf.Log(Mathf.Max(relPitch, 0.0001f), 2f));
+        if (semitones == 0)
+        {
+            newKey = initialKey;
+            newCamelot = camelot;
+            return !string.IsNullOrEmpty(newKey) || !string.IsNullOrEmpty(newCamelot);
+        }
+
+        if (TryParseNoteKey(initialKey, out int idx, out bool isMinor, out string rootNote))
+        {
+            int newIdx = Mod12(idx + semitones);
+            string noteName = Notes[newIdx];
+            newKey = isMinor ? (noteName + "m") : noteName;
+
+            if (isMinor)
+            {
+                if (MinorToCamelot.TryGetValue(noteName, out string camel))
+                    newCamelot = camel;
+            }
+            else
+            {
+                if (MajorToCamelot.TryGetValue(noteName, out string camel))
+                    newCamelot = camel;
+            }
+            return true;
+        }
+
+        if (!string.IsNullOrEmpty(camelot) && CamelotToNote.TryGetValue(camelot.Trim(), out var pair))
+        {
+            bool isMinor2 = pair.Item2;
+            string baseNote = pair.Item1;
+
+            if (NoteToIndex.TryGetValue(baseNote, out int idx2))
+            {
+                int newIdx = Mod12(idx2 + semitones);
+                string noteName = Notes[newIdx];
+                newKey = isMinor2 ? (noteName + "m") : noteName;
+
+                if (isMinor2)
+                {
+                    if (MinorToCamelot.TryGetValue(noteName, out string camel))
+                        newCamelot = camel;
+                }
+                else
+                {
+                    if (MajorToCamelot.TryGetValue(noteName, out string camel))
+                        newCamelot = camel;
+                }
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static int Mod12(int v) => (v % 12 + 12) % 12;
+
+    private static bool TryParseNoteKey(string key, out int index, out bool isMinor, out string rootOut)
+    {
+        index = 0; isMinor = false; rootOut = null;
+        if (string.IsNullOrWhiteSpace(key)) return false;
+
+        string s = key.Trim();
+
+        s = s.Replace("minor", "m", StringComparison.OrdinalIgnoreCase)
+             .Replace("min", "m", StringComparison.OrdinalIgnoreCase)
+             .Replace("major", "", StringComparison.OrdinalIgnoreCase)
+             .Replace("maj", "", StringComparison.OrdinalIgnoreCase)
+             .Replace(" ", "");
+
+        if (s.EndsWith("m", StringComparison.OrdinalIgnoreCase))
+        {
+            isMinor = true;
+            s = s.Substring(0, s.Length - 1);
+        }
+
+        if (!NoteToIndex.TryGetValue(s, out index))
+            return false;
+
+        rootOut = s.ToUpperInvariant();
+        return true;
     }
 }
