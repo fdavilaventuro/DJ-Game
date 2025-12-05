@@ -335,6 +335,32 @@ public class DJTable : MonoBehaviour
         replayGainFactor = 1f;
     }
 
+    public void TerminateFMODSession()
+    {
+        if (channel.hasHandle()){
+            channel.stop();
+            channel.release();
+        }
+        if (eqDSP.hasHandle()) eqDSP.release();
+        if (lpfDSP.hasHandle()) lpfDSP.release();
+        if (hpfDSP.hasHandle()) hpfDSP.release();
+        if (sound.hasHandle()) sound.release();
+        
+        // Reset all DSP and sound handles to prevent stale references
+        channel.clearHandle();
+        eqDSP.clearHandle();
+        lpfDSP.clearHandle();
+        hpfDSP.clearHandle();
+        sound.clearHandle();
+        channel.clearHandle();
+    }
+    
+    // Call this from OnDestroy or before scene load
+    void OnDestroy()
+    {
+        TerminateFMODSession();
+    }
+
     // -----------------------------------------------------------
     //                     SCRATCHING
     // -----------------------------------------------------------
