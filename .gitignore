@@ -107,3 +107,4 @@ dj_game_BurstDebugInformation_DoNotShip/
 *.log
 *.synctex.gz
 download_temp/
+*.meta
