@@ -112,9 +112,17 @@ public class SongManager : MonoBehaviour
         var songNames = new List<string> { "None Playing" };
         foreach (var t in tracks)
         {
+            // Prefijo BPM si está disponible
+            string bpmPrefix = "";
+            if (t.meta != null && t.meta.bpm > 0)
+            {
+                bpmPrefix = $"({t.meta.bpm}) ";
+            }
+
             string displayName = t.meta != null && !string.IsNullOrEmpty(t.meta.title)
-                ? t.meta.title
-                : Path.GetFileNameWithoutExtension(t.audioPath);
+                ? bpmPrefix + t.meta.title
+                : bpmPrefix + Path.GetFileNameWithoutExtension(t.audioPath);
+
             if (t.meta != null && !string.IsNullOrEmpty(t.meta.artist))
             {
                 displayName += " - " + t.meta.artist;
