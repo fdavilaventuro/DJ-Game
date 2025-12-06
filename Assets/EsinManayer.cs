@@ -11,7 +11,7 @@ public UnityEvent whenSceneChanged;
 
 public void LoadEnv(int sceneIdx)
 {
-whenSceneChanged?.Invoke();
+//whenSceneChanged?.Invoke();
 StartCoroutine(Mondongo(sceneIdx));
 }
 
